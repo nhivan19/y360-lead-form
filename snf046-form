@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+        max-width: 600px;
+        font-family: Inter, Arial !important;
+        margin: 0 auto;
+        padding: 15px;
+        background: #f3f3f3;
+        font-size: 14px;
+    }
+    
+    div {
+    	font-family: Inter;
+        font-size: 14px;
+        padding: 10px;
+        margin: 0 auto;
+		line-height: 1.5;
+        text-align: justify;
+    }
+
+    input {
+    	font-family: Inter;
+        width: 100%;
+        padding: 12px;
+        margin: 3px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 12px;
+    }
+
+    button {
+    	font-family: Inter;
+        font-size: 18px;
+        width: 40%; 
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        display: block;  
+        margin: 16px auto 0;
+    }
+
+    button:disabled {
+        background: #ccc;
+    }
+
+    #msg {
+        display: none;
+        color: #28a745;
+        text-align: center;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    </style>
+</head>
+<body>
+
+    <form id="snf045-form">
+        <img src="https://y360.vn/uploads/course/course_113_1769767937.png" alt="Banner Nhà Thuốc" style="width: 100%; border-radius: 0px 0px 0 0; display: block;">
+        
+        <div class="form-intro">
+        <p>Cảm ơn Quý Dược sĩ đã quan tâm việc cập nhật thông tin chuyên môn cùng với Y360 Quý Dược sĩ vui lòng điền thông tin bên dưới nhằm được hỗ trợ tạo tài khoản học tập trên nền tảng Y360.</p>
+        <p>📲 Dược sĩ đừng quên kiểm tra Zalo để nhận thông tin đăng nhập nhé.</p>
+        <p>📌 Thông tin cá nhân sẽ được bảo mật, chỉ sử dụng với mục đích tạo tài khoản để Dược sĩ tìm hiểu tài liệu chuyên môn.</p>
+    </div>
+    
+        <input type="text" name="name" placeholder="Họ và tên" required>
+        <input type="tel" name="phone" placeholder="Số điện thoại" pattern="[0-9]{10,11}" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="pharmacy_name" placeholder="Tên nhà thuốc" required>
+        <input type="text" name="province" placeholder="Tỉnh thành" required>
+        
+        <input type="hidden" name="utm_source" id="utm_source">
+        <input type="hidden" name="utm_medium" id="utm_medium">
+        <input type="hidden" name="utm_campaign" id="utm_campaign">
+        
+        <button type="submit" id="submitBtn">ĐĂNG KÝ</button>
+    </form>
+    
+    <div id="msg">Đăng ký thành công! Cảm ơn bạn.</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwShh-ZumOa-qdPZhytR9iIRiXokegfGi9NzEalplxVkUZcG1Yn5ZlkbRuzKa3Cp1-5DA/exec';
+        const form = document.getElementById('snf045-form');
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('msg');
+
+        function getParam(name) {
+            try {
+                const parentParams = new URLSearchParams(window.top.location.search);
+                if (parentParams.has(name)) return parentParams.get(name);
+            } catch (e) {
+                const selfParams = new URLSearchParams(window.location.search);
+                return selfParams.get(name);
+            }
+            return '';
+        }
+
+        // Gán giá trị UTM ngay khi load
+        document.getElementById('utm_source').value = getParam('utm_source');
+        document.getElementById('utm_medium').value = getParam('utm_medium');
+        document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+        if (form) {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                btn.disabled = true;
+                btn.innerText = 'Đang gửi...';
+				
+                const formData = new FormData(form);
+                const params = new URLSearchParams();
+                formData.forEach((value, key) => {
+                    params.append(key, value);
+                });
+
+                fetch(scriptURL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: params.toString() // Gửi dưới dạng chuỗi tham số
+                })
+                .then(() => {
+                    form.style.display = 'none';
+                    msg.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    btn.disabled = false;
+                    btn.innerText = 'GỬI LẠI';
+                    alert('Có lỗi xảy ra, vui lòng thử lại.');
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

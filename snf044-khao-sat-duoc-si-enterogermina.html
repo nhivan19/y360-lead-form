@@ -8,27 +8,32 @@
     <style>
         body { max-width: 600px; font-family: 'Inter', sans-serif; margin: 0 auto; padding: 15px; background: #f4f7f9; color: #333; }
         .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        .header-img { width: 100%; border-radius: 8px; margin-bottom: 20px; display: block; }
-        h2 { color: #0056b3; font-size: 22px; text-align: center; margin-bottom: 25px; text-transform: uppercase; }
-        .question-block { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #edf2f7; }
-        .question-text { font-weight: 700; display: block; margin-bottom: 12px; line-height: 1.5; color: #1a202c; }
-        .options-group { display: flex; flex-direction: column; gap: 10px; }
-        label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 15px; line-height: 1.4; padding: 10px; border-radius: 8px; transition: 0.2s; border: 1px solid transparent; }
-        label:hover { background: #f8fafc; border-color: #e2e8f0; }
-        input[type="radio"], input[type="checkbox"] { margin-top: 4px; transform: scale(1.2); accent-color: #007bff; }
-        button { width: 100%; padding: 16px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
-        button:hover { background: #0056b3; box-shadow: 0 4px 10px rgba(0,123,255,0.3); }
-        button:disabled { background: #cbd5e0; cursor: not-allowed; }
+        .header-img { width: 100%; border-radius: 8px; margin-bottom: 18px; display: block; }
+        h2 { color: #0056b3; font-size: 19px; text-align: center; margin-bottom: 20px; text-transform: uppercase; line-height: 1.4; }
+        
+        /* Tăng khoảng cách giữa các khối câu hỏi */
+        .question-block { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; }
+        .question-text { font-weight: 700; display: block; margin-bottom: 10px; line-height: 1.4; color: #1a202c; font-size: 14.5px; }
+        
+        /* Tăng khoảng cách giữa các lựa chọn */
+        .options-group { display: flex; flex-direction: column; gap: 6px; }
+        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 6px 8px; border-radius: 6px; transition: 0.2s; }
+        label:hover { background: #f8fafc; }
+        
+        input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); accent-color: #007bff; cursor: pointer; flex-shrink: 0; }
+        
+        button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #cbd5e0; }
+        
         #msg { display: none; text-align: center; padding: 50px 20px; background: white; border-radius: 12px; }
-        .nps-group { display: flex; justify-content: space-between; padding: 10px 0; }
-        .nps-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
     </style>
 </head>
 <body>
 
 <div class="container" id="form-container">
     <img src="https://y360.vn/uploads/course/course_113_1769767937.png" class="header-img">
-    <h2>Khảo sát Enterogermina</h2>
+    <h2>KHẢO SÁT KIẾN THỨC & NIỀM TIN<br>ENTEROGERMINA</h2>
     
     <form id="quiz-form">
         <input type="hidden" name="brand" value="Enterogermina">
@@ -36,66 +41,72 @@
         <div class="question-block">
             <span class="question-text">1. Đâu là đặc tính nổi bật của Bacillus clausii dạng bào tử?</span>
             <div class="options-group">
-                <label><input type="radio" name="q1" value="Chống chịu môi trường khắc nghiệt" required> A. Khả năng chống chịu cao với môi trường khắc nghiệt</label>
-                <label><input type="radio" name="q1" value="Phối hợp chủng khác"> B. Sử dụng phối hợp được với các chủng lợi khuẩn khác</label>
-                <label><input type="radio" name="q1" value="Chống enzym tiêu hóa"> C. Khả năng chống lại sự phân giải của enzym tiêu hoá</label>
+                <label><input type="checkbox" name="q1" value="A"> A. Khả năng chống chịu cao với môi trường khắc nghiệt (acid dịch vị, dịch mật, nhiệt độ cao)</label>
+                <label><input type="checkbox" name="q1" value="B"> B. Sử dụng phối hợp được với các chủng lợi khuẩn khác</label>
+                <label><input type="checkbox" name="q1" value="C"> C. Khả năng chống lại sự phân giải của enzym tiêu hoá</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">2. Hãy chọn tất cả các ý đúng về chủng BB-12®?</span>
+            <span class="question-text">2. Hãy chọn tất cả các ý đúng về lợi khuẩn BB-12®?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q2" value="Hỗ trợ khóc dạ đề"> A. Hiệu quả trong hỗ trợ điều trị khóc dạ đề</label>
-                <label><input type="checkbox" name="q2" value="Hội Tiêu hóa VN khuyên dùng"> B. Được khuyến cáo bởi Hội Khoa học Tiêu hoá VN</label>
-                <label><input type="checkbox" name="q2" value="Chứng nhận FDA/EFSA"> C. Được chứng nhận an toàn bởi FDA và EFSA</label>
+                <label><input type="checkbox" name="q2" value="A"> A. BB-12® hiệu quả trong hỗ trợ điều trị khóc dạ đề: giảm tần suất khóc, tăng thời gian ngủ</label>
+                <label><input type="checkbox" name="q2" value="B"> B. BB-12® được khuyến cáo bởi Hội Khoa học Tiêu hoá Việt Nam</label>
+                <label><input type="checkbox" name="q2" value="C"> C. Được chứng nhận an toàn bởi FDA (Hoa Kỳ) và EFSA (Châu Âu)</label>
+                <label><input type="checkbox" name="q2" value="D"> D. BB-12® là chủng mới phát hiện, số lượng nghiên cứu lâm sàng còn ít</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">3. Ưu tiên tư vấn B. clausii ống 2 tỷ bào tử khi nào?</span>
+            <span class="question-text">3. Trường hợp ưu tiên tư vấn Bacillus clausii ống 2 tỷ bào tử? (Có thể chọn nhiều)</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q3" value="Du lịch"> A. Chuẩn bị đi du lịch</label>
-                <label><input type="checkbox" name="q3" value="Ăn uống ko lành mạnh"> B. Ăn uống không lành mạnh</label>
-                <label><input type="checkbox" name="q3" value="Tiêu chảy cấp"> C. Tiêu chảy cấp</label>
-                <label><input type="checkbox" name="q3" value="Căng thẳng công việc"> D. Căng thẳng, áp lực công việc</label>
+                <label><input type="checkbox" name="q3" value="A"> A. Chuẩn bị đi du lịch</label>
+                <label><input type="checkbox" name="q3" value="B"> B. Ăn uống không lành mạnh</label>
+                <label><input type="checkbox" name="q3" value="C"> C. Tiêu chảy cấp</label>
+                <label><input type="checkbox" name="q3" value="D"> D. Căng thẳng, áp lực do công việc</label>
+                <label><input type="checkbox" name="q3" value="E"> E. Trẻ hay bị ốm vặt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">4. Ưu tiên tư vấn B. clausii ống 4 tỷ bào tử khi nào?</span>
+            <span class="question-text">4. Trường hợp ưu tiên tư vấn Bacillus clausii ống 4 tỷ bào tử? (Có thể chọn nhiều)</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q4" value="Tiêu chảy do kháng sinh"> A. Tiêu chảy khi dùng kháng sinh</label>
-                <label><input type="checkbox" name="q4" value="Rối loạn tiêu hóa"> B. Rối loạn tiêu hóa</label>
-                <label><input type="checkbox" name="q4" value="Phác đồ H.Pylori"> C. Đang điều trị phác đồ tiệt trừ H. pylori</label>
+                <label><input type="checkbox" name="q4" value="A"> A. Tiêu chảy khi dùng kháng sinh</label>
+                <label><input type="checkbox" name="q4" value="B"> B. Rối loạn tiêu hoá</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Đang điều trị với phác đồ tiệt trừ H. pylori</label>
+                <label><input type="checkbox" name="q4" value="D"> D. Cần tăng cường hệ miễn dịch</label>
+                <label><input type="checkbox" name="q4" value="E"> E. Tiêu chảy do ngộ độc thực phẩm nhẹ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">5. Đánh giá kiến thức về B. clausii và BB-12® từ nội dung này?</span>
+            <span class="question-text">5. Anh/chị đánh giá thế nào về mức độ cung cấp kiến thức của nội dung này?</span>
             <div class="options-group">
-                <label><input type="radio" name="q5" value="Kiến thức cũ"> B. Đa phần là kiến thức tôi đã biết</label>
-                <label><input type="radio" name="q5" value="Hữu ích, cập nhật mới"> C. Khá hữu ích, cập nhật thông tin chuyên môn</label>
-                <label><input type="radio" name="q5" value="Rất hữu ích, ứng dụng cao"> D. Rất hữu ích, tính ứng dụng cao</label>
+                <label><input type="checkbox" name="q5" value="A"> A. Không mang lại kiến thức mới</label>
+                <label><input type="checkbox" name="q5" value="B"> B. Mang tính ôn tập, đa phần là kiến thức tôi đã biết</label>
+                <label><input type="checkbox" name="q5" value="C"> C. Khá hữu ích, cập nhật một số thông tin chuyên môn chưa biết</label>
+                <label><input type="checkbox" name="q5" value="D"> D. Rất hữu ích, mang lại góc nhìn mới và tính ứng dụng cao</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">6. Nội dung này có giúp bạn tự tin hơn khi tư vấn không?</span>
+            <span class="question-text">6. Nội dung này có giúp anh/chị tự tin hơn khi tư vấn không?</span>
             <div class="options-group">
-                <label><input type="radio" name="q6" value="Tự tin một phần"> B. Tự tin một phần khi khách hỏi</label>
-                <label><input type="radio" name="q6" value="Sẵn sàng chủ động"> C. Tự tin, sẵn sàng chủ động tư vấn</label>
-                <label><input type="radio" name="q6" value="Rất tự tin, thuyết phục"> D. Rất tự tin, có thể tư vấn sâu thuyết phục</label>
+                <label><input type="checkbox" name="q6" value="A"> A. Vẫn chưa, tôi cần thêm thông tin</label>
+                <label><input type="checkbox" name="q6" value="B"> B. Tự tin một phần, sẽ tư vấn khi khách hàng chủ động hỏi</label>
+                <label><input type="checkbox" name="q6" value="C"> C. Tự tin, sẵn sàng chủ động tư vấn theo nhu cầu khách</label>
+                <label><input type="checkbox" name="q6" value="D"> D. Rất tự tin, có thể tư vấn sâu để thuyết phục khách hàng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">7. Mức độ sẵn lòng giới thiệu cho đồng nghiệp (1-5)?</span>
-            <div class="nps-group">
-                <div class="nps-item"><input type="radio" name="q7" value="1" required><small>1</small></div>
-                <div class="nps-item"><input type="radio" name="q7" value="2"><small>2</small></div>
-                <div class="nps-item"><input type="radio" name="q7" value="3"><small>3</small></div>
-                <div class="nps-item"><input type="radio" name="q7" value="4"><small>4</small></div>
-                <div class="nps-item"><input type="radio" name="q7" value="5"><small>5</small></div>
+            <span class="question-text">7. Mức độ sẵn lòng giới thiệu nội dung cho đồng nghiệp?</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q7" value="1"> 1 (Rất không sẵn sàng)</label>
+                <label><input type="checkbox" name="q7" value="2"> 2 (Hơi không sẵn sàng)</label>
+                <label><input type="checkbox" name="q7" value="3"> 3 (Hơi sẵn sàng)</label>
+                <label><input type="checkbox" name="q7" value="4"> 4 (Khá sẵn sàng)</label>
+                <label><input type="checkbox" name="q7" value="5"> 5 (Rất sẵn sàng)</label>
             </div>
         </div>
 
@@ -109,7 +120,7 @@
 
 <div id="msg">
     <h2 style="color: #28a745;">Cảm ơn bạn!</h2>
-    <p>Kết quả khảo sát của bạn đã được ghi nhận thành công.</p>
+    <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
 </div>
 
 <script>
@@ -117,7 +128,6 @@
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
 
-    // Lấy UTM từ URL
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
@@ -130,9 +140,8 @@
 
         const formData = new FormData(form);
         const finalData = new URLSearchParams();
-
-        // Gom nhóm checkbox trùng tên thành chuỗi "A, B, C"
         let tempObj = {};
+
         formData.forEach((value, key) => {
             if (!tempObj[key]) {
                 tempObj[key] = value;
@@ -151,10 +160,9 @@
             document.getElementById('msg').style.display = 'block';
         })
         .catch(error => {
-            console.error('Error!', error.message);
             btn.disabled = false;
             btn.innerText = 'THỬ LẠI';
-            alert('Có lỗi xảy ra khi gửi dữ liệu.');
+            alert('Lỗi gửi dữ liệu.');
         });
     });
 </script>

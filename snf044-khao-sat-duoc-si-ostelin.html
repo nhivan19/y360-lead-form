@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khảo sát Sức Khỏe Xương</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { max-width: 600px; font-family: 'Inter', sans-serif; margin: 0 auto; padding: 15px; background: #f4f7f9; color: #333; }
+        .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .header-img { width: 100%; border-radius: 8px; margin-bottom: 18px; display: block; }
+        h2 { color: #0056b3; font-size: 19px; text-align: center; margin-bottom: 20px; text-transform: uppercase; line-height: 1.4; }
+        
+        .question-block { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; }
+        .question-text { font-weight: 700; display: block; margin-bottom: 10px; line-height: 1.4; color: #1a202c; font-size: 14.5px; }
+        
+        .options-group { display: flex; flex-direction: column; gap: 6px; }
+        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 6px 8px; border-radius: 6px; transition: 0.2s; }
+        label:hover { background: #f8fafc; }
+        
+        input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); accent-color: #007bff; cursor: pointer; flex-shrink: 0; }
+        
+        button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #cbd5e0; }
+        
+        #msg { display: none; text-align: center; padding: 50px 20px; background: white; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="form-container">
+    <img src="https://y360.vn/uploads/course/course_113_1769767937.png" class="header-img">
+
+    <form id="quiz-form">
+        <input type="hidden" name="brand" value="Calcium_Corbiere">
+
+        <div class="question-block">
+            <span class="question-text">1. Dựa theo nội dung y khoa này, anh/chị hãy cho biết những lý do tại sao phụ nữ văn phòng sau 30 tuổi cần quan tâm đến sức khỏe xương (chọn tất cả ý đúng):</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q1" value="A"> A. Sau 30 tuổi, mật độ xương bắt đầu giảm dần</label>
+                <label><input type="checkbox" name="q1" value="B"> B. Phụ nữ văn phòng có nhiều thói quen và lối sống ảnh hưởng xấu đến sức khỏe xương</label>
+                <label><input type="checkbox" name="q1" value="C"> C. Phụ nữ văn phòng thường ít tiếp xúc ánh nắng, dẫn đến nguy cơ thiếu hụt Vitamin D và calci</label>
+                <label><input type="checkbox" name="q1" value="D"> D. Mật độ xương của phụ nữ không thay đổi từ sau 30 tuổi</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">2. Dựa theo nội dung y khoa này, anh/chị hãy cho biết bổ sung calci và vitamin D3 mang lại lợi ích gì với sức khỏe xương của phụ nữ văn phòng sau 30 tuổi (chọn tất cả ý đúng):</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q2" value="A"> A. Bổ sung calci và vitamin D3 giúp giảm loãng xương và gãy xương</label>
+                <label><input type="checkbox" name="q2" value="B"> B. Bổ sung vitamin D3 giúp tăng cường hấp thu calci</label>
+                <label><input type="checkbox" name="q2" value="C"> C. Bổ sung calci và vitamin D3 giúp cải thiện sức khỏe xương ở phụ nữ có chế độ ăn thiếu chất</label>
+                <label><input type="checkbox" name="q2" value="D"> D. Bổ sung calci và vitamin D3 giúp xương dài hơn ở phụ nữ sau 30 tuổi</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">3. Sau khi tiếp cận nội dung y khoa này, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc tư vấn sản phẩm bổ sung calci kết hợp vitamin D3:</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q3" value="A"> A. Rất sẵn sàng, tôi sẽ chủ động tư vấn sản phẩm chứa công thức trên cho người tiêu dùng</label>
+                <label><input type="checkbox" name="q3" value="B"> B. Khá sẵn sàng, tôi sẽ cân nhắc tư vấn sản phẩm chứa công thức trên cho người tiêu dùng</label>
+                <label><input type="checkbox" name="q3" value="C"> C. Không sẵn sàng, tôi chưa thấy được tầm quan trọng của việc tư vấn chủ động</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">4. Anh/chị đánh giá thế nào về mức độ cung cấp kiến thức về hiệu quả tối ưu của sản phẩm calci kết hợp vitamin D3 so với những gì anh/chị đã biết trước đây?</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q4" value="A"> A. Không mang lại kiến thức mới</label>
+                <label><input type="checkbox" name="q4" value="B"> B. Mang tính ôn tập, đa phần là các kiến thức tôi đã biết</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Khá hữu ích, cập nhật một số thông tin chuyên môn mà tôi chưa biết</label>
+                <label><input type="checkbox" name="q4" value="D"> D. Rất hữu ích, mang lại góc nhìn mới mẻ và có tính ứng dụng cao cho việc tư vấn thực tế</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">5. Nội dung y khoa này có giúp anh/chị tự tin hơn khi tư vấn lựa chọn sản phẩm bổ sung calci kết hợp vitamin D3 tối ưu tại nhà thuốc không?</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q5" value="A"> A. Vẫn chưa, tôi cần thêm thông tin</label>
+                <label><input type="checkbox" name="q5" value="B"> B. Tự tin một phần, tôi sẽ tư vấn khi khách hàng chủ động hỏi</label>
+                <label><input type="checkbox" name="q5" value="C"> C. Tự tin, tôi sẵn sàng chủ động tư vấn theo nhu cầu, tình trạng của khách</label>
+                <label><input type="checkbox" name="q5" value="D"> D. Rất tự tin, tôi có thể tư vấn sâu về hiệu quả, chất lượng để thuyết phục khách hàng</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">6. Trên thang điểm từ 1-5, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc giới thiệu về nội dung y khoa này cho đồng nghiệp:</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q6" value="1"> 1 (Rất không sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="2"> 2 (Hơi không sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="3"> 3 (Hơi sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="4"> 4 (Khá sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="5"> 5 (Rất sẵn sàng)</label>
+            </div>
+        </div>
+
+        <input type="hidden" name="utm_source" id="utm_source">
+        <input type="hidden" name="utm_medium" id="utm_medium">
+        <input type="hidden" name="utm_campaign" id="utm_campaign">
+
+        <button type="submit" id="submitBtn">GỬI KẾT QUẢ</button>
+    </form>
+</div>
+
+<div id="msg">
+    <h2 style="color: #28a745;">Cảm ơn bạn!</h2>
+    <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
+</div>
+
+<script>
+    // URL Web App từ Google Apps Script của bạn
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbycuun-2Y5XlRLAA69uAEOLTj2SxvReNs44NY-4WZwqFXBcLkaD8Fp0CKQQQpQYzp1VLw/exec';
+    const form = document.getElementById('quiz-form');
+    const btn = document.getElementById('submitBtn');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
+    document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
+    document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = 'Đang xử lý...';
+
+        const formData = new FormData(form);
+        const finalData = new URLSearchParams();
+        let tempObj = {};
+
+        formData.forEach((value, key) => {
+            if (!tempObj[key]) {
+                tempObj[key] = value;
+            } else {
+                tempObj[key] = tempObj[key] + ", " + value;
+            }
+        });
+
+        for (let key in tempObj) {
+            finalData.append(key, tempObj[key]);
+        }
+
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
+        .then(() => {
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('msg').style.display = 'block';
+        })
+        .catch(error => {
+            btn.disabled = false;
+            btn.innerText = 'THỬ LẠI';
+            alert('Lỗi gửi dữ liệu.');
+        });
+    });
+</script>
+</body>
+</html>

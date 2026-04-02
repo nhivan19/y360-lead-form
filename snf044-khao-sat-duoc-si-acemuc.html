@@ -23,8 +23,47 @@
         button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
-        
-        #msg { display: none; text-align: center; padding: 50px 20px; background: white; border-radius: 12px; }
+
+        /* --- PHẦN CSS MỚI CHO POP-UP --- */
+        #popup-overlay {
+            display: none; /* Ẩn mặc định */
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #msg-popup {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .zalo-btn { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 16px 24px; 
+            background-color: #0068ff; 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+        }
     </style>
 </head>
 <body>
@@ -102,16 +141,21 @@
     </form>
 </div>
 
-<div id="msg">
-    <h2 style="color: #28a745;">Cảm ơn bạn!</h2>
-    <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
+<div id="popup-overlay">
+    <div id="msg-popup">
+        <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
+        <p style="font-size: 16px; line-height: 1.5; color: #333;">Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
+            TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
+        </a>
+    </div>
 </div>
 
 <script>
-    // URL Web App từ Google Apps Script của bạn
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxreP-iYo-6phl-FNYJYP8CkAGY3sVW5tC4xDo3LY6y1i-Q2nDccMKbMkjMJl56UOPWLA/exec';
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
+    const overlay = document.getElementById('popup-overlay'); // Khai báo overlay
 
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
@@ -141,8 +185,9 @@
 
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('msg').style.display = 'block';
+            // HIỆN POP-UP THAY VÌ ẨN FORM
+            overlay.style.display = 'flex';
+            btn.innerText = 'ĐÃ GỬI THÀNH CÔNG';
         })
         .catch(error => {
             btn.disabled = false;

@@ -185,14 +185,16 @@
 
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            // HIỆN POP-UP THAY VÌ ẨN FORM
+            // HIỆN POP-UP NGAY LẬP TỨC
             overlay.style.display = 'flex';
-            btn.innerText = 'ĐÃ GỬI THÀNH CÔNG';
+            
+            // Reset nút bấm
+            btn.innerText = 'GỬI THÀNH CÔNG';
         })
         .catch(error => {
             btn.disabled = false;
             btn.innerText = 'THỬ LẠI';
-            alert('Lỗi gửi dữ liệu.');
+            alert('Có lỗi xảy ra, vui lòng thử lại.');
         });
     });
 </script>

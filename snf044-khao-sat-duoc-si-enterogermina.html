@@ -24,46 +24,36 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* --- PHẦN CSS CỦA POP-UP CANH GIỮA MÀN HÌNH --- */
+        /* --- CSS POP-UP GIỐNG CÁC BẢN TRƯỚC --- */
         #popup-overlay {
-            display: none;
+            display: none; /* Mặc định ẩn */
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 99999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
         }
 
         #msg-popup {
             background: white;
-            padding: 35px 25px;
-            border-radius: 16px;
+            padding: 40px 20px;
+            border-radius: 15px;
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            width: 85%;
+            max-width: 400px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         .zalo-btn {
             display: inline-block;
-            margin-top: 25px;
-            padding: 16px 28px;
-            background-color: #0068ff;
+            margin-top: 20px;
+            padding: 15px 25px;
+            background: #0068ff;
             color: white !important;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 30px;
             font-weight: bold;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
         }
     </style>
 </head>
@@ -157,11 +147,9 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
-        <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
-        <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
-            TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
-        </a>
+        <h2 style="color: #28a745; margin-bottom: 10px;">Cảm ơn bạn!</h2>
+        <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn">TRUY CẬP ZALO OA NHẬN QUÀ</a>
     </div>
 </div>
 
@@ -169,7 +157,8 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwSnzB5X46MoO4c1sgcqcnwJZCGriNsiza-0vfhyGPLc1SrpjY_-m1ZiYPTJX4A2zGEPw/exec';
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
-    const overlay = document.getElementById('popup-overlay'); 
+    const overlay = document.getElementById('popup-overlay');
+    const container = document.getElementById('form-container');
 
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
@@ -179,7 +168,7 @@
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true;
-        btn.innerText = 'Đang gửi dữ liệu...';
+        btn.innerText = 'Đang xử lý...';
 
         const formData = new FormData(form);
         const finalData = new URLSearchParams();
@@ -197,15 +186,16 @@
             finalData.append(key, tempObj[key]);
         }
 
-        // Sử dụng logic then/catch cải tiến để đảm bảo hiện popup
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
+            // Khi thành công: Ẩn form và Hiện popup
+            container.style.display = 'none';
             overlay.style.display = 'flex';
-            btn.innerText = 'GỬI THÀNH CÔNG';
         })
-        .catch(() => {
+        .catch(error => {
+            // Trường hợp có lỗi mạng vẫn cho hiện popup để khách không bấm lại
+            container.style.display = 'none';
             overlay.style.display = 'flex';
-            btn.innerText = 'GỬI THÀNH CÔNG';
         });
     });
 </script>

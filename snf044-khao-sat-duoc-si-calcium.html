@@ -23,47 +23,8 @@
         button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
-
-        /* CSS CHO POP-UP (MODAL) */
-        #popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        #msg-popup {
-            background: white;
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .zalo-btn { 
-            display: inline-block; 
-            margin-top: 20px; 
-            padding: 16px 24px; 
-            background-color: #0068ff; 
-            color: white !important; 
-            text-decoration: none; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
-        }
+        
+        #msg { display: none; text-align: center; padding: 50px 20px; background: white; border-radius: 12px; }
     </style>
 </head>
 <body>
@@ -142,14 +103,9 @@
     </form>
 </div>
 
-<div id="popup-overlay">
-    <div id="msg-popup">
-        <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
-        <p style="font-size: 16px; line-height: 1.5; color: #333;">Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
-            TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
-        </a>
-    </div>
+<div id="msg">
+    <h2 style="color: #28a745;">Cảm ơn bạn!</h2>
+    <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
 </div>
 
 <script>
@@ -184,21 +140,17 @@
             finalData.append(key, tempObj[key]);
         }
 
-         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            // HIỆN POP-UP NGAY LẬP TỨC
-            overlay.style.display = 'flex';
-            
-            // Reset nút bấm
-            btn.innerText = 'GỬI THÀNH CÔNG';
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('msg').style.display = 'block';
         })
         .catch(error => {
             btn.disabled = false;
             btn.innerText = 'THỬ LẠI';
-            alert('Có lỗi xảy ra, vui lòng thử lại.');
+            alert('Lỗi gửi dữ liệu.');
         });
     });
 </script>
 </body>
 </html>
-

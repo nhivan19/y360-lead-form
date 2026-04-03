@@ -23,8 +23,50 @@
         button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
-        
-        #msg { display: none; text-align: center; padding: 50px 20px; background: white; border-radius: 12px; }
+
+        /* --- STYLE POP-UP CANH GIỮA MÀN HÌNH --- */
+        #popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #msg-popup {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .zalo-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 16px 28px;
+            background-color: #0068ff;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+            transition: transform 0.2s;
+        }
+        .zalo-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -103,18 +145,23 @@
     </form>
 </div>
 
-<div id="msg">
-    <h2 style="color: #28a745;">Cảm ơn bạn!</h2>
-    <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
+<div id="popup-overlay">
+    <div id="msg-popup">
+        <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
+            TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
+        </a>
+    </div>
 </div>
 
 <script>
-    // URL Web App từ Google Apps Script của bạn
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxhLhe3yvqHKk1C7_kR7tB9TIy3VeDvfxvU7ASXg7_NYU4fDp8xIyUr5z9UTUpFr-59YQ/exec';
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
+    const overlay = document.getElementById('popup-overlay');
+    const container = document.getElementById('form-container');
 
-    // Lấy thông số UTM từ URL
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
@@ -129,7 +176,6 @@
         const finalData = new URLSearchParams();
         let tempObj = {};
 
-        // Xử lý gom các checkbox cùng tên thành chuỗi cách nhau dấu phẩy
         formData.forEach((value, key) => {
             if (!tempObj[key]) {
                 tempObj[key] = value;
@@ -144,13 +190,13 @@
 
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('msg').style.display = 'block';
+            container.style.display = 'none';
+            overlay.style.display = 'flex';
         })
         .catch(error => {
-            btn.disabled = false;
-            btn.innerText = 'THỬ LẠI';
-            alert('Lỗi gửi dữ liệu.');
+            // Đảm bảo luôn hiện popup kể cả khi gặp lỗi mạng phản hồi
+            container.style.display = 'none';
+            overlay.style.display = 'flex';
         });
     });
 </script>

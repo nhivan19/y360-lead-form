@@ -24,13 +24,16 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* CSS CHO POP-UP (MODAL) */
+        /* --- PHẦN CSS CỦA POP-UP ĐÃ ĐƯỢC ĐIỀU CHỈNH ĐỂ CANH GIỮA --- */
         #popup-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
+            top: 0; 
+            left: 0; /* Ép sát mép trái màn hình tổng */
+            width: 100vw; /* Lấy toàn bộ chiều rộng màn hình hiển thị, bỏ qua max-width của body */
+            height: 100vh; /* Lấy toàn bộ chiều cao màn hình hiển thị */
+            background: rgba(0, 0, 0, 0.75); /* Tăng độ mờ nền một chút để nổi bật hơn */
+            z-index: 99999; /* Đảm bảo nằm trên cùng */
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -39,12 +42,15 @@
 
         #msg-popup {
             background: white;
-            padding: 30px 20px;
-            border-radius: 15px;
+            padding: 35px 25px;
+            border-radius: 16px;
             text-align: center;
-            max-width: 400px;
-            width: 100%;
+            max-width: 420px; /* Chiều rộng tối đa của hộp thoại */
+            width: 90%; /* Chiều rộng linh hoạt trên điện thoại nhỏ */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Bỏ qua margin của body */
+            margin: 0 !important; 
         }
 
         @keyframes popIn {
@@ -54,8 +60,8 @@
 
         .zalo-btn { 
             display: inline-block; 
-            margin-top: 20px; 
-            padding: 16px 24px; 
+            margin-top: 25px; 
+            padding: 16px 28px; 
             background-color: #0068ff; 
             color: white !important; 
             text-decoration: none; 
@@ -63,6 +69,10 @@
             font-weight: bold; 
             font-size: 15px;
             box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+            transition: transform 0.2s;
+        }
+        .zalo-btn:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
@@ -143,8 +153,8 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
-        <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
-        <p style="font-size: 16px; line-height: 1.5; color: #333;">Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
         <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
             TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
         </a>
@@ -165,7 +175,7 @@
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true;
-        btn.innerText = 'Đang xử lý...';
+        btn.innerText = 'Đang gửi dữ liệu...';
 
         const formData = new FormData(form);
         const finalData = new URLSearchParams();

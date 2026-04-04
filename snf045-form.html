@@ -7,92 +7,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            max-width: 600px;
-            font-family: Inter, Arial !important;
-            margin: 0 auto;
-            padding: 15px;
-            background: #f3f3f3;
-            font-size: 14px;
-        }
+        body { max-width: 600px; font-family: Inter, Arial !important; margin: 0 auto; padding: 15px; background: #f3f3f3; font-size: 14px; }
+        div.form-intro { font-family: Inter; font-size: 14px; padding: 10px; margin: 0 auto; line-height: 1.5; text-align: justify; }
+        input { font-family: Inter; width: 100%; padding: 12px; margin: 3px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 12px; }
         
-        div.form-intro {
-            font-family: Inter;
-            font-size: 14px;
-            padding: 10px;
-            margin: 0 auto;
-            line-height: 1.5;
-            text-align: justify;
-        }
-
-        input {
-            font-family: Inter;
-            width: 100%;
-            padding: 12px;
-            margin: 3px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 12px;
-        }
-
         button#submitBtn {
-            font-family: Inter;
-            font-size: 18px;
-            width: 40%; 
-            padding: 12px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            display: block;  
-            margin: 16px auto 0;
+            font-family: Inter; font-size: 18px; width: 40%; padding: 12px; background: #007bff; color: white;
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold; display: block; margin: 16px auto 0;
         }
-
         button:disabled { background: #ccc; }
 
-        /* --- Style cho Pop-up --- */
+        /* --- Pop-up Overlay --- */
         #popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;
         }
-
         #popup-content {
-            background: white;
-            padding: 35px 25px;
-            border-radius: 12px;
-            text-align: center;
-            width: 85%;
-            max-width: 380px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: popIn 0.3s ease-out;
+            background: white; padding: 35px 25px; border-radius: 12px; text-align: center;
+            width: 85%; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.85); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
         #popup-content h3 { color: #28a745; margin-top: 0; font-size: 22px; }
         #popup-content p { margin: 15px 0 25px; line-height: 1.5; color: #333; font-size: 15px; }
 
+        /* Nút Zalo nổi bật */
         .zalo-btn {
-            display: inline-block;
-            background: #0068ff;
-            color: white !important;
-            padding: 14px 30px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 16px;
-            box-shadow: 0 4px 12px rgba(0,104,255,0.3);
+            display: block; background: #0068ff; color: white !important;
+            padding: 16px 20px; text-decoration: none; border-radius: 50px;
+            font-weight: bold; font-size: 17px; box-shadow: 0 4px 15px rgba(0,104,255,0.4);
+            cursor: pointer; border: none; width: 100%; box-sizing: border-box;
         }
     </style>
 </head>
@@ -124,22 +66,24 @@
         <div id="popup-content">
             <h3>Đăng ký thành công!</h3>
             <p>Kiểm tra ngay tin nhắn Zalo để nhận thông tin đăng nhập nhé.</p>
-            <a href="https://zalo.me/1788542680321016283" class="zalo-btn" id="btnRedirect">TRUY CẬP NGAY</a>
+            <button type="button" class="zalo-btn" id="btnRedirect">TRUY CẬP NGAY</button>
         </div>
     </div>
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwShh-ZumOa-qdPZhytR9iIRiXokegfGi9NzEalplxVkUZcG1Yn5ZlkbRuzKa3Cp1-5DA/exec';
+        const zaloLink = 'https://zalo.me/1788542680321016283';
         const form = document.getElementById('snf045-form');
         const btn = document.getElementById('submitBtn');
         const overlay = document.getElementById('popup-overlay');
         const btnRedirect = document.getElementById('btnRedirect');
 
-        // Xử lý nút TRUY CẬP NGAY để chuyển hướng trực tiếp trên cửa sổ hiện tại
-        btnRedirect.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = this.href;
+        // Xử lý chuyển hướng cưỡng bách
+        btnRedirect.addEventListener('click', function() {
+            // Thử chuyển hướng bằng nhiều cách để đảm bảo thành công
+            window.top.location.href = zaloLink; 
+            window.location.replace(zaloLink);
         });
 
         function getParam(name) {
@@ -173,9 +117,7 @@
                 .then(() => {
                     overlay.style.display = 'flex';
                 })
-                .catch(error => {
-                    console.error('Error!', error.message);
-                    // Vẫn hiện popup để khách đi tiếp sang Zalo dù có lỗi ghi nhận
+                .catch(() => {
                     overlay.style.display = 'flex';
                 });
             });

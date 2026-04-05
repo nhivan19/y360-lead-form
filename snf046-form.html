@@ -81,7 +81,6 @@
             position: relative;
         }
 
-        /* --- NÚT DẤU X TẮT POP-UP --- */
         #close-popup {
             position: absolute;
             top: 15px;
@@ -119,8 +118,6 @@
             width: 100%;
             box-sizing: border-box;
         }
-        .zalo-btn:hover { background: #0056e0; transform: translateY(-2px); }
-        .zalo-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -167,30 +164,41 @@
         const btnRedirect = document.getElementById('btnRedirect');
         const closePopup = document.getElementById('close-popup');
 
-        // Chuyển hướng khi click nút trên Pop-up
+        /**
+         * HÀM LẤY UTM TỐI ƯU:
+         * Kiểm tra cả URL của iframe và URL của trang mẹ (nếu có thể)
+         */
+        function getParam(name) {
+            let search = window.location.search;
+            try {
+                // Thử lấy từ window top (trang mẹ) nếu đang ở trong iframe
+                if (window.self !== window.top) {
+                    search = window.top.location.search;
+                }
+            } catch (e) {
+                // Nếu dính lỗi Cross-Origin (không quyền truy cập trang mẹ), giữ nguyên search hiện tại
+            }
+            const params = new URLSearchParams(search);
+            return params.get(name) || '';
+        }
+
+        // Gán giá trị vào các ô hidden ngay khi load trang
+        document.getElementById('utm_source').value = getParam('utm_source');
+        document.getElementById('utm_medium').value = getParam('utm_medium');
+        document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+        // Chuyển hướng Zalo
         btnRedirect.addEventListener('click', function() {
             window.top.location.href = zaloLink;
         });
 
-        // Tắt Pop-up khi click dấu X
+        // Đóng Pop-up
         closePopup.addEventListener('click', function() {
             overlay.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Mở lại cuộn trang
-            btn.disabled = false; // Mở lại nút đăng ký
+            document.body.style.overflow = 'auto'; 
+            btn.disabled = false; 
             btn.innerText = 'ĐĂNG KÝ';
         });
-
-        function getParam(name) {
-            try {
-                const search = window.top.location.search || window.location.search;
-                const params = new URLSearchParams(search);
-                return params.get(name) || '';
-            } catch (e) { return ''; }
-        }
-
-        document.getElementById('utm_source').value = getParam('utm_source');
-        document.getElementById('utm_medium').value = getParam('utm_medium');
-        document.getElementById('utm_campaign').value = getParam('utm_campaign');
 
         if (form) {
             form.addEventListener('submit', e => {
@@ -200,6 +208,8 @@
                 
                 const formData = new FormData(form);
                 const params = new URLSearchParams();
+                
+                // Đảm bảo tất cả dữ liệu bao gồm cả UTM được nạp vào params
                 formData.forEach((value, key) => {
                     params.append(key, value);
                 });
@@ -215,6 +225,7 @@
                     document.body.style.overflow = 'hidden'; 
                 })
                 .catch(error => {
+                    // Ngay cả khi lỗi fetch (thường do no-cors), vẫn hiện pop-up để khách đi tiếp Zalo
                     overlay.style.display = 'flex';
                 });
             });

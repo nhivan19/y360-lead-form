@@ -54,19 +54,19 @@
         button#submitBtn:hover { background: #0056b3; }
         button:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- NÂNG CẤP POP-UP CỐ ĐỊNH GIỮA MÀN HÌNH --- */
+        /* --- POP-UP CỐ ĐỊNH GIỮA MÀN HÌNH --- */
         #popup-overlay {
             display: none;
-            position: fixed; /* Cố định với khung hình trình duyệt */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75); /* Làm tối nền phía sau */
-            z-index: 99999; /* Luôn nằm trên cùng */
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 99999;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(3px); /* Hiệu ứng mờ nền chuyên nghiệp */
+            backdrop-filter: blur(3px);
         }
 
         #popup-content {
@@ -80,6 +80,20 @@
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
+
+        /* --- NÚT DẤU X TẮT POP-UP --- */
+        #close-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        #close-popup:hover { color: #333; }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.8) translateY(20px); }
@@ -135,6 +149,7 @@
 
     <div id="popup-overlay">
         <div id="popup-content">
+            <span id="close-popup">&times;</span>
             <h3>Đăng ký thành công!</h3>
             <p>Kết quả đã được ghi nhận.<br>Vui lòng kiểm tra Zalo từ Y360 để nhận thông tin đăng nhập.</p>
             <button type="button" class="zalo-btn" id="btnRedirect">TRUY CẬP NGAY</button>
@@ -143,7 +158,6 @@
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
-        // GIỮ NGUYÊN SCRIPT URL CỦA BẠN
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyZ-NZt_hOg-Lyn95DBQhbb0MOAybVbwz2legVeASBM_ja_EOU5jUl1UVIu3wko8BnNmQ/exec';
         const zaloLink = 'https://zalo.me/1788542680321016283';
         
@@ -151,10 +165,19 @@
         const btn = document.getElementById('submitBtn');
         const overlay = document.getElementById('popup-overlay');
         const btnRedirect = document.getElementById('btnRedirect');
+        const closePopup = document.getElementById('close-popup');
 
         // Chuyển hướng khi click nút trên Pop-up
         btnRedirect.addEventListener('click', function() {
             window.top.location.href = zaloLink;
+        });
+
+        // Tắt Pop-up khi click dấu X
+        closePopup.addEventListener('click', function() {
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Mở lại cuộn trang
+            btn.disabled = false; // Mở lại nút đăng ký
+            btn.innerText = 'ĐĂNG KÝ';
         });
 
         function getParam(name) {
@@ -189,7 +212,6 @@
                 })
                 .then(() => {
                     overlay.style.display = 'flex';
-                    // Ngăn người dùng cuộn trang khi đang hiện pop-up
                     document.body.style.overflow = 'hidden'; 
                 })
                 .catch(error => {

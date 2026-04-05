@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { max-width: 600px; font-family: Inter, Arial !important; margin: 0 auto; padding: 15px; background: #f3f3f3; font-size: 14px; }
+        body { max-width: 600px; font-family: Inter, Arial ! diplomat; margin: 0 auto; padding: 15px; background: #f3f3f3; font-size: 14px; }
         div.form-intro { font-family: Inter; font-size: 14px; padding: 10px; margin: 0 auto; line-height: 1.5; text-align: justify; }
         input { font-family: Inter; width: 100%; padding: 12px; margin: 3px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 12px; }
         
@@ -23,13 +23,27 @@
             background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;
         }
         #popup-content {
-            background: white; padding: 35px 25px; border-radius: 12px; text-align: center;
+            background: white; padding: 40px 25px 30px; border-radius: 12px; text-align: center;
             width: 85%; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative; /* Để đặt dấu X */
         }
+
+        /* Nút dấu X để tắt */
+        #close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+        }
+        #close-popup:hover { color: #333; }
+
         #popup-content h3 { color: #28a745; margin-top: 0; font-size: 22px; }
         #popup-content p { margin: 15px 0 25px; line-height: 1.5; color: #333; font-size: 15px; }
 
-        /* Nút Zalo nổi bật */
         .zalo-btn {
             display: block; background: #0068ff; color: white !important;
             padding: 16px 20px; text-decoration: none; border-radius: 50px;
@@ -64,6 +78,7 @@
 
     <div id="popup-overlay">
         <div id="popup-content">
+            <span id="close-popup">&times;</span>
             <h3>Đăng ký thành công!</h3>
             <p>Kiểm tra ngay tin nhắn Zalo để nhận thông tin đăng nhập nhé.</p>
             <button type="button" class="zalo-btn" id="btnRedirect">TRUY CẬP NGAY</button>
@@ -72,31 +87,46 @@
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
+        // GIỮ NGUYÊN LINK CỦA BẠN
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwShh-ZumOa-qdPZhytR9iIRiXokegfGi9NzEalplxVkUZcG1Yn5ZlkbRuzKa3Cp1-5DA/exec';
         const zaloLink = 'https://zalo.me/1788542680321016283';
+        
         const form = document.getElementById('snf045-form');
         const btn = document.getElementById('submitBtn');
         const overlay = document.getElementById('popup-overlay');
         const btnRedirect = document.getElementById('btnRedirect');
+        const closePopup = document.getElementById('close-popup');
 
-        // Xử lý chuyển hướng cưỡng bách
-        btnRedirect.addEventListener('click', function() {
-            // Thử chuyển hướng bằng nhiều cách để đảm bảo thành công
-            window.top.location.href = zaloLink; 
-            window.location.replace(zaloLink);
-        });
-
+        // Hàm lấy UTM (Sửa lỗi không nhận diện được UTM khi nhúng WordPress)
         function getParam(name) {
-            try {
-                const search = window.top.location.search || window.location.search;
-                const params = new URLSearchParams(search);
-                return params.get(name) || '';
-            } catch (e) { return ''; }
+            let urlParams = new URLSearchParams(window.location.search);
+            // Nếu không tìm thấy trong window hiện tại, thử lấy ở window cha (nếu là iframe)
+            if (!urlParams.has(name)) {
+                try {
+                    urlParams = new URLSearchParams(window.top.location.search);
+                } catch (e) {
+                    // Trình duyệt chặn quyền truy cập top window
+                }
+            }
+            return urlParams.get(name) || '';
         }
 
+        // Gán UTM ngay khi load
         document.getElementById('utm_source').value = getParam('utm_source');
         document.getElementById('utm_medium').value = getParam('utm_medium');
         document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+        // Chuyển hướng Zalo
+        btnRedirect.addEventListener('click', () => {
+            window.top.location.href = zaloLink; 
+        });
+
+        // Tắt Pop-up khi ấn dấu X
+        closePopup.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = 'ĐĂNG KÝ';
+        });
 
         if (form) {
             form.addEventListener('submit', e => {

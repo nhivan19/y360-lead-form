@@ -15,7 +15,7 @@
         .question-text { font-weight: 700; display: block; margin-bottom: 10px; line-height: 1.4; color: #1a202c; font-size: 14.5px; }
         
         .options-group { display: flex; flex-direction: column; gap: 6px; }
-        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 6px 8px; border-radius: 6px; transition: 0.2s; }
+        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 8px; border-radius: 6px; transition: 0.2s; }
         label:hover { background: #f8fafc; }
         
         input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); accent-color: #007bff; cursor: pointer; flex-shrink: 0; }
@@ -24,51 +24,65 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
+        /* CSS CHO POP-UP */
         #popup-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
             z-index: 99999;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
 
         #msg-popup {
             background: white;
-            padding: 40px 25px 30px;
-            border-radius: 16px;
+            padding: 40px 25px 35px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
-            width: 100%;
+            max-width: 90%;
+            width: 380px;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .zalo-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 16px 28px;
-            background-color: #0068ff;
-            color: white !important;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+        .close-popup {
+            position: absolute;
+            top: 12px; right: 18px;
+            font-size: 30px; font-weight: bold;
+            color: #ccc; cursor: pointer; line-height: 1;
         }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.7) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .zalo-btn { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 16px 28px; 
+            background-color: #0068ff; 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: 15px;
+            box-shadow: 0 6px 20px rgba(0,104,255,0.4);
+            text-transform: uppercase;
+            transition: transform 0.2s;
+        }
+        .zalo-btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
 
 <div class="container" id="form-container">
     <img src="https://y360.vn/uploads/course/course_113_1769767937.png" class="header-img">
-    
-    <!-- Iframe ẩn để xử lý gửi dữ liệu mà không làm trắng trang mobile -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSuccess();}"></iframe>
 
-    <form id="quiz-form" action="https://script.google.com/macros/s/AKfycbxhLhe3yvqHKk1C7_kR7tB9TIy3VeDvfxvU7ASXg7_NYU4fDp8xIyUr5z9UTUpFr-59YQ/exec" method="POST" target="hidden_iframe">
+    <form id="quiz-form">
         <input type="hidden" name="brand" value="Pharmaton">
 
         <div class="question-block">
@@ -141,40 +155,93 @@
     </form>
 </div>
 
+<!-- POP-UP OVERLAY -->
 <div id="popup-overlay">
     <div id="msg-popup">
-        <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
-        <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" target="_blank" class="zalo-btn">
+        <span class="close-popup" id="closePopup">&times;</span>
+        <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #444; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" id="zaloLinkBtn">
             TRUY CẬP ZALO OA NHẬN QUÀ
         </a>
     </div>
 </div>
 
 <script>
-    var submitted = false;
+    // URL Script Pharmaton của bạn (đã giữ lại đúng ID script Pharmaton)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxhLhe3yvqHKk1C7_kR7tB9TIy3VeDvfxvU7ASXg7_NYU4fDp8xIyUr5z9UTUpFr-59YQ/exec';
     
-    // Lấy UTM parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
-    document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
-    document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
-
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
+    const overlay = document.getElementById('popup-overlay');
+    const closePopup = document.getElementById('closePopup');
+    const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
-    form.onsubmit = function() {
-        btn.disabled = true;
-        btn.innerText = 'Đang gửi...';
-        submitted = true;
-        // Backup: Nếu 3 giây iframe chưa kịp báo load, vẫn hiện popup để đảm bảo user nhấn được link Zalo
-        setTimeout(showSuccess, 3000);
-    };
-
-    function showSuccess() {
-        document.getElementById('form-container').style.display = 'none';
-        document.getElementById('popup-overlay').style.display = 'flex';
+    // Hàm lấy tham số chuẩn theo script Telfast
+    function getParam(name) {
+        let search = window.location.search;
+        try {
+            if (window.self !== window.top) search = window.top.location.search;
+        } catch (e) {}
+        return new URLSearchParams(search).get(name) || '';
     }
+
+    document.getElementById('utm_source').value = getParam('utm_source');
+    document.getElementById('utm_medium').value = getParam('utm_medium');
+    document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+    // Chuyển trang dùng window.top.location.href (Quan trọng)
+    zaloLinkBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.top.location.href = "https://zalo.me/s/2592899659654122271/";
+    });
+
+    closePopup.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        btn.disabled = false;
+        btn.innerText = 'GỬI KẾT QUẢ';
+    });
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = 'GỬI KẾT QUẢ';
+        }
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = 'Đang gửi dữ liệu...';
+
+        const formData = new FormData(form);
+        const finalData = new URLSearchParams();
+        let tempObj = {};
+
+        formData.forEach((value, key) => {
+            if (!tempObj[key]) {
+                tempObj[key] = value;
+            } else {
+                tempObj[key] = tempObj[key] + ", " + value;
+            }
+        });
+
+        for (let key in tempObj) {
+            finalData.append(key, tempObj[key]);
+        }
+
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
+        .then(() => {
+            overlay.style.display = 'flex';
+            btn.innerText = 'GỬI THÀNH CÔNG';
+        })
+        .catch(error => {
+            btn.disabled = false;
+            btn.innerText = 'THỬ LẠI';
+            alert('Có lỗi xảy ra, vui lòng thử lại.');
+        });
+    });
 </script>
 </body>
 </html>

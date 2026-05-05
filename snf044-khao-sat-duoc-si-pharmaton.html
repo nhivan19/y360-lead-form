@@ -9,22 +9,21 @@
         body { max-width: 600px; font-family: 'Inter', sans-serif; margin: 0 auto; padding: 15px; background: #f4f7f9; color: #333; }
         .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
         .header-img { width: 100%; border-radius: 8px; margin-bottom: 18px; display: block; }
-        h2 { color: #0056b3; font-size: 18px; text-align: center; margin-bottom: 20px; text-transform: uppercase; line-height: 1.4; }
+        h2 { color: #0056b3; font-size: 19px; text-align: center; margin-bottom: 20px; text-transform: uppercase; line-height: 1.4; }
         
         .question-block { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; }
         .question-text { font-weight: 700; display: block; margin-bottom: 10px; line-height: 1.4; color: #1a202c; font-size: 14.5px; }
         
-        .options-group { display: flex; flex-direction: column; gap: 8px; }
-        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 8px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
-        label:hover { background: #f8fafc; border-color: #e2e8f0; }
+        .options-group { display: flex; flex-direction: column; gap: 6px; }
+        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 6px 8px; border-radius: 6px; transition: 0.2s; }
+        label:hover { background: #f8fafc; }
         
-        input[type="checkbox"] { margin-top: 2px; transform: scale(1.2); accent-color: #007bff; flex-shrink: 0; }
+        input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); accent-color: #007bff; cursor: pointer; flex-shrink: 0; }
         
-        button { width: 100%; padding: 16px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
-        button:active { background: #0056b3; transform: scale(0.98); }
-        button:disabled { background: #cbd5e0; cursor: not-allowed; }
+        button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #cbd5e0; }
 
-        /* POP-UP */
         #popup-overlay {
             display: none;
             position: fixed;
@@ -38,24 +37,26 @@
 
         #msg-popup {
             background: white;
-            padding: 35px 25px;
-            border-radius: 20px;
+            padding: 40px 25px 30px;
+            border-radius: 16px;
             text-align: center;
-            max-width: 350px;
+            max-width: 400px;
             width: 100%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .zalo-btn {
-            display: block;
-            margin-top: 20px;
-            padding: 18px;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 16px 28px;
             background-color: #0068ff;
             color: white !important;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 50px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
         }
     </style>
 </head>
@@ -63,38 +64,72 @@
 
 <div class="container" id="form-container">
     <img src="https://y360.vn/uploads/course/course_113_1769767937.png" class="header-img">
-    <h2>Khảo sát kiến thức y khoa</h2>
-
-    <!-- Gửi dữ liệu qua iframe ẩn để không bị trắng trang Mobile -->
+    
+    <!-- Iframe ẩn để xử lý gửi dữ liệu mà không làm trắng trang mobile -->
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSuccess();}"></iframe>
 
     <form id="quiz-form" action="https://script.google.com/macros/s/AKfycbxhLhe3yvqHKk1C7_kR7tB9TIy3VeDvfxvU7ASXg7_NYU4fDp8xIyUr5z9UTUpFr-59YQ/exec" method="POST" target="hidden_iframe">
         <input type="hidden" name="brand" value="Pharmaton">
 
-        <!-- Nội dung câu hỏi -->
         <div class="question-block">
-            <span class="question-text">1. Những đặc điểm nổi trội của nhân sâm G115:</span>
+            <span class="question-text">1. Dựa theo nội dung y khoa này, hãy chỉ ra những đặc điểm nổi trội của nhân sâm G115 (chọn tất cả ý đúng):</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q1" value="A"> A. Hoạt chất chuẩn hóa 4% ginsenoside</label>
-                <label><input type="checkbox" name="q1" value="B"> B. Kiểm soát nghiêm ngặt</label>
-                <label><input type="checkbox" name="q1" value="C"> C. Hiệu quả đã được ghi nhận</label>
+                <label><input type="checkbox" name="q1" value="A"> A. Chứa hoạt chất chuẩn hóa 4% ginsenoside</label>
+                <label><input type="checkbox" name="q1" value="B"> B. Quy trình sản xuất kiểm soát nghiêm ngặt</label>
+                <label><input type="checkbox" name="q1" value="C"> C. Hiệu quả được ghi nhận trong nhiều nghiên cứu</label>
+                <label><input type="checkbox" name="q1" value="D"> D. Thiếu ổn định, nguồn gốc đa dạng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">2. Ưu thế công thức G115 kết hợp vitamin & khoáng chất:</span>
+            <span class="question-text">2. Dựa theo nội dung y khoa này, anh/chị hãy chọn tất cả ý đúng khi nói về ưu thế của công thức nhân sâm G115 kết hợp vitamin & khoáng chất so với vitamin tổng hợp thông thường?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q2" value="A"> A. An toàn hằng ngày</label>
-                <label><input type="checkbox" name="q2" value="B"> B. Hiệu quả hiệp đồng tế bào</label>
+                <label><input type="checkbox" name="q2" value="A"> A. An toàn và sử dụng được hằng ngày</label>
+                <label><input type="checkbox" name="q2" value="B"> B. Hiệu quả hiệp đồng tại tế bào giúp tăng cường năng lượng và sức đề kháng hiệu quả và bền vững</label>
+                <label><input type="checkbox" name="q2" value="C"> C. Kích thích tức thời nhưng không bền vững</label>
+                <label><input type="checkbox" name="q2" value="D"> D. Không ghi nhận lợi ích lâu dài</label>
             </div>
         </div>
 
-        <!-- Các câu hỏi khác... (Lược bớt cho gọn, bạn có thể thêm lại như bản trước) -->
         <div class="question-block">
-            <span class="question-text">3. Mức độ sẵn sàng lựa chọn:</span>
+            <span class="question-text">3. Mức độ sẵn sàng của anh/chị trong việc lựa chọn sản phẩm bổ sung năng lượng và hỗ trợ sức đề kháng với công thức nhân sâm G115 kết hợp vitamin và khoáng chất:</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q3" value="A"> Rất sẵn sàng</label>
-                <label><input type="checkbox" name="q3" value="B"> Có thể</label>
+                <label><input type="checkbox" name="q3" value="A"> A. Rất sẵn sàng lựa chọn</label>
+                <label><input type="checkbox" name="q3" value="B"> B. Có thể sẽ lựa chọn</label>
+                <label><input type="checkbox" name="q3" value="C"> C. Không có ý định lựa chọn</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">4. Anh/chị đánh giá kiến thức của mình về tư vấn sản phẩm bổ sung năng lượng nhân sâm G115 kết hợp vitamin & khoáng chất như thế nào?</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q4" value="A"> A. Rất hạn chế</label>
+                <label><input type="checkbox" name="q4" value="B"> B. Hạn chế vừa phải</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Vừa phải</label>
+                <label><input type="checkbox" name="q4" value="D"> D. Tốt</label>
+                <label><input type="checkbox" name="q4" value="E"> E. Rất tốt</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">5. Anh/chị đánh giá mức độ tự tin khi tư vấn sản phẩm bổ sung năng lượng chứa nhân sâm G115 kết hợp vitamin & khoáng chất như thế nào?</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q5" value="A"> A. Tự tin thấp</label>
+                <label><input type="checkbox" name="q5" value="B"> B. Tự tin vừa</label>
+                <label><input type="checkbox" name="q5" value="C"> C. Tự tin</label>
+                <label><input type="checkbox" name="q5" value="D"> D. Khá tự tin</label>
+                <label><input type="checkbox" name="q5" value="E"> E. Rất tự tin</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <span class="question-text">6. Trên thang điểm từ 1-5, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc giới thiệu về nội dung y khoa này cho đồng nghiệp:</span>
+            <div class="options-group">
+                <label><input type="checkbox" name="q6" value="1"> 1 (Rất không sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="2"> 2 (Hơi không sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="3"> 3 (Hơi sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="4"> 4 (Khá sẵn sàng)</label>
+                <label><input type="checkbox" name="q6" value="5"> 5 (Rất sẵn sàng)</label>
             </div>
         </div>
 
@@ -108,17 +143,18 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
-        <h2 style="color: #28a745; margin-bottom: 10px;">Thành công!</h2>
-        <p style="color: #4a5568;">Vui lòng bấm nút dưới đây để nhận quà tặng từ Zalo OA.</p>
-        <!-- Thêm target="_blank" để Mobile hiểu là cần mở ứng dụng/tab mới -->
+        <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
         <a href="https://zalo.me/s/2592899659654122271/" target="_blank" class="zalo-btn">
-            NHẬN QUÀ QUA ZALO
+            TRUY CẬP ZALO OA NHẬN QUÀ
         </a>
     </div>
 </div>
 
 <script>
     var submitted = false;
+    
+    // Lấy UTM parameters
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
@@ -129,9 +165,9 @@
 
     form.onsubmit = function() {
         btn.disabled = true;
-        btn.innerText = 'Đang xử lý...';
+        btn.innerText = 'Đang gửi...';
         submitted = true;
-        // Nếu sau 3 giây iframe không load kịp (do mạng), vẫn hiện popup để khách nhận quà
+        // Backup: Nếu 3 giây iframe chưa kịp báo load, vẫn hiện popup để đảm bảo user nhấn được link Zalo
         setTimeout(showSuccess, 3000);
     };
 

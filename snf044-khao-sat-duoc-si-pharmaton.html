@@ -33,7 +33,6 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            box-sizing: border-box;
         }
 
         #msg-popup {
@@ -45,7 +44,6 @@
             width: 100%;
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .close-popup {
@@ -56,12 +54,6 @@
             font-weight: bold;
             color: #aaa;
             cursor: pointer;
-            line-height: 1;
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .zalo-btn {
@@ -75,7 +67,6 @@
             font-weight: bold;
             font-size: 15px;
             box-shadow: 0 4px 15px rgba(0,104,255,0.3);
-            transition: transform 0.2s;
         }
     </style>
 </head>
@@ -176,7 +167,6 @@
     const overlay = document.getElementById('popup-overlay');
     const container = document.getElementById('form-container');
     const closePopupBtn = document.getElementById('closePopup');
-    const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
     // Lấy UTM parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -184,7 +174,6 @@
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
     document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
 
-    // Tắt pop-up
     closePopupBtn.addEventListener('click', () => {
         overlay.style.display = 'none';
         container.style.display = 'block'; 
@@ -195,44 +184,33 @@
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true;
-        btn.innerText = 'Đang gửi dữ liệu...';
+        btn.innerText = 'Đang xử lý...';
 
-        const formData = new FormData(form);
-        const finalData = new URLSearchParams();
-        let tempObj = {};
-
-        formData.forEach((value, key) => {
-            if (!tempObj[key]) {
-                tempObj[key] = value;
-            } else {
-                tempObj[key] = tempObj[key] + ", " + value;
-            }
-        });
-
-        for (let key in tempObj) {
-            finalData.append(key, tempObj[key]);
-        }
-
-        // Gửi dữ liệu đồng thời hiển thị Pop-up ngay để tránh bị kẹt do CORS
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
-        .then(() => {
+        // Sử dụng phương pháp ghép dữ liệu chắc chắn nhất
+        var formData = new FormData(form);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', scriptURL);
+        
+        // Hiển thị Pop-up ngay sau khi trình duyệt xác nhận lệnh gửi (tránh chờ mạng lag)
+        xhr.onload = function() {
             showSuccess();
-        })
-        .catch(() => {
-            // Vẫn hiện success kể cả khi lỗi mạng để user có thể nhấn link Zalo
+        };
+        xhr.onerror = function() {
             showSuccess();
-        });
+        };
+
+        xhr.send(formData);
+        
+        // Backup: Nếu sau 2 giây mạng quá chậm vẫn hiện popup để user bấm quà
+        setTimeout(showSuccess, 2000);
     });
 
     function showSuccess() {
-        container.style.display = 'none';
-        overlay.style.display = 'flex';
+        if (overlay.style.display !== 'flex') {
+            container.style.display = 'none';
+            overlay.style.display = 'flex';
+        }
     }
-
-    // Đảm bảo link Zalo mở được trên mọi thiết bị
-    zaloLinkBtn.addEventListener('click', function(e) {
-        // Có thể bổ sung track click tại đây nếu cần
-    });
 </script>
 </body>
 </html>

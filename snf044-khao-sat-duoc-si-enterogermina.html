@@ -42,7 +42,21 @@
             width: 85%;
             max-width: 400px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            position: relative; /* Để định vị nút X */
         }
+
+        /* Style cho nút X tắt popup */
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-popup:hover { color: #333; }
 
         .zalo-btn {
             display: inline-block;
@@ -148,9 +162,9 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
+        <span class="close-popup" id="closePopup">&times;</span>
         <h2 style="color: #28a745; margin-bottom: 10px;">Cảm ơn bạn!</h2>
         <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <!-- Nút Zalo với cơ chế mở Top Window -->
         <a href="https://zalo.me/s/2592899659654122271/" id="zaloLinkBtn" class="zalo-btn">TRUY CẬP ZALO OA NHẬN QUÀ</a>
     </div>
 </div>
@@ -162,8 +176,8 @@
     const overlay = document.getElementById('popup-overlay');
     const container = document.getElementById('form-container');
     const zaloLinkBtn = document.getElementById('zaloLinkBtn');
+    const closePopup = document.getElementById('closePopup');
 
-    // Hàm lấy UTM parameters hỗ trợ iFrame
     function getParam(name) {
         let search = window.location.search;
         try {
@@ -176,10 +190,26 @@
     document.getElementById('utm_medium').value = getParam('utm_medium');
     document.getElementById('utm_campaign').value = getParam('utm_campaign');
 
-    // Cơ chế ép mở Zalo ở cửa sổ cao nhất để không bị chặn
     zaloLinkBtn.addEventListener('click', function(e) {
         e.preventDefault();
         window.top.location.href = "https://zalo.me/s/2592899659654122271/";
+    });
+
+    // Hàm đóng popup
+    function hidePopup() {
+        overlay.style.display = 'none';
+        container.style.display = 'block'; // Hiện lại form nếu cần
+        btn.disabled = false;
+        btn.innerText = 'GỬI KẾT QUẢ';
+    }
+
+    closePopup.addEventListener('click', hidePopup);
+
+    // Đóng khi click ra ngoài vùng trắng của popup
+    window.addEventListener('click', function(event) {
+        if (event.target == overlay) {
+            hidePopup();
+        }
     });
 
     form.addEventListener('submit', e => {

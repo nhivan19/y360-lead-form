@@ -24,60 +24,67 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* CSS CHO POP-UP */
+        /* CSS CHO POP-UP - ĐIỀU CHỈNH ĐỂ LUÔN GIỮA MÀN HÌNH */
         #popup-overlay {
-            display: none;
+            display: none; /* Sẽ chuyển thành flex bằng JS */
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 99999;
+            /* Căn giữa bằng Flexbox */
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
 
         #msg-popup {
             background: white;
-            padding: 40px 20px 30px;
-            border-radius: 15px;
+            padding: 40px 25px 35px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
-            width: 100%;
+            max-width: 90%; /* Đảm bảo hiển thị tốt trên mobile */
+            width: 380px;
             position: relative;
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         /* Nút X tắt popup */
         .close-popup {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
+            top: 12px;
+            right: 18px;
+            font-size: 30px;
             font-weight: bold;
-            color: #aaa;
+            color: #ccc;
             cursor: pointer;
             line-height: 1;
+            transition: 0.2s;
         }
-        .close-popup:hover { color: #333; }
+        .close-popup:hover { color: #666; }
 
         @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.7) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .zalo-btn { 
             display: inline-block; 
             margin-top: 20px; 
-            padding: 16px 24px; 
+            padding: 16px 28px; 
             background-color: #0068ff; 
             color: white !important; 
             text-decoration: none; 
             border-radius: 50px; 
             font-weight: bold; 
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+            font-size: 15px;
+            box-shadow: 0 6px 20px rgba(0,104,255,0.4);
             text-transform: uppercase;
+            transition: transform 0.2s;
         }
+        .zalo-btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -158,11 +165,12 @@
     </form>
 </div>
 
+<!-- POP-UP OVERLAY -->
 <div id="popup-overlay">
     <div id="msg-popup">
         <span class="close-popup" id="closePopup">&times;</span>
         <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
-        <p style="font-size: 16px; line-height: 1.5; color: #333;">Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <p style="font-size: 16px; line-height: 1.6; color: #444; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
         <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" id="zaloLinkBtn">
             TRUY CẬP ZALO OA NHẬN QUÀ
         </a>
@@ -177,7 +185,6 @@
     const closePopup = document.getElementById('closePopup');
     const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
-    // Lấy UTM parameters hỗ trợ cả iFrame
     function getParam(name) {
         let search = window.location.search;
         try {
@@ -190,17 +197,24 @@
     document.getElementById('utm_medium').value = getParam('utm_medium');
     document.getElementById('utm_campaign').value = getParam('utm_campaign');
 
-    // Điều hướng Zalo ở cửa sổ cao nhất
     zaloLinkBtn.addEventListener('click', function(e) {
         e.preventDefault();
         window.top.location.href = "https://zalo.me/s/2592899659654122271/";
     });
 
-    // Đóng Popup
     closePopup.addEventListener('click', () => {
         overlay.style.display = 'none';
         btn.disabled = false;
         btn.innerText = 'GỬI KẾT QUẢ';
+    });
+
+    // Đóng khi click ra ngoài vùng trắng của popup
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = 'GỬI KẾT QUẢ';
+        }
     });
 
     form.addEventListener('submit', e => {
@@ -226,8 +240,8 @@
 
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
+            // Hiện popup ở trạng thái Flex để căn giữa
             overlay.style.display = 'flex';
-            window.scrollTo(0, 0);
             btn.innerText = 'GỬI THÀNH CÔNG';
         })
         .catch(error => {

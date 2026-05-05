@@ -15,7 +15,7 @@
         .question-text { font-weight: 700; display: block; margin-bottom: 10px; line-height: 1.4; color: #1a202c; font-size: 14.5px; }
         
         .options-group { display: flex; flex-direction: column; gap: 6px; }
-        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 6px 8px; border-radius: 6px; transition: 0.2s; }
+        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; line-height: 1.4; padding: 8px; border-radius: 6px; transition: 0.2s; }
         label:hover { background: #f8fafc; }
         
         input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); accent-color: #007bff; cursor: pointer; flex-shrink: 0; }
@@ -24,7 +24,7 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* --- STYLE POP-UP CHUẨN --- */
+        /* --- STYLE POP-UP CỐ ĐỊNH GIỮA MÀN HÌNH --- */
         #popup-overlay {
             display: none;
             position: fixed;
@@ -39,14 +39,28 @@
 
         #msg-popup {
             background: white;
-            padding: 35px 25px;
+            padding: 40px 25px 30px;
             border-radius: 16px;
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        /* Nút X tắt popup */
+        .close-popup {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-popup:hover { color: #333; }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.8); }
@@ -55,15 +69,16 @@
 
         .zalo-btn {
             display: inline-block;
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 16px 28px;
             background-color: #0068ff;
             color: white !important;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14px;
             box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -75,6 +90,7 @@
     <form id="quiz-form">
         <input type="hidden" name="brand" value="Phosphalugel">
 
+        <!-- Câu 1 & 2 giữ nguyên -->
         <div class="question-block">
             <span class="question-text">1. Nhóm thuốc nào là lựa chọn phổ biến giúp làm dịu nhanh các triệu chứng đau rát, khó tiêu do dư thừa acid dịch vị?</span>
             <div class="options-group">
@@ -94,8 +110,9 @@
             </div>
         </div>
 
+        <!-- Câu 3, 4, 5 điều chỉnh nội dung -->
         <div class="question-block">
-            <span class="question-text">3. Sau khi tiếp cận nội dung y khoa này, mức độ sẵn sàng của anh/chị trong việc lựa chọn Phosphalugel để kiểm soát các triệu chứng đau dạ dày và trào ngược như thế nào?</span>
+            <span class="question-text">3. Mức độ sẵn sàng của anh/chị trong việc lựa chọn aluminum phosphate gel để kiểm soát trào ngược dạ dày-thực quản như thế nào?</span>
             <div class="options-group">
                 <label><input type="checkbox" name="q3" value="A"> A. Rất sẵn sàng lựa chọn</label>
                 <label><input type="checkbox" name="q3" value="B"> B. Có thể sẽ lựa chọn</label>
@@ -104,25 +121,28 @@
         </div>
 
         <div class="question-block">
-            <span class="question-text">4. Anh/chị đánh giá thế nào về mức độ cung cấp kiến thức về tư vấn điều trị tăng tiết acid dạ dày hay trào ngược dạ dày-thực quản của nội dung y khoa này so với những gì anh/chị đã biết trước đây?</span>
+            <span class="question-text">4. Anh/chị đánh giá kiến thức của mình về tư vấn điều trị tăng tiết acid dạ dày hay trào ngược dạ dày-thực quản với aluminum phosphate như thế nào?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q4" value="A"> A. Không mang lại kiến thức mới</label>
-                <label><input type="checkbox" name="q4" value="B"> B. Mang tính ôn tập, đa phần là các kiến thức tôi đã biết</label>
-                <label><input type="checkbox" name="q4" value="C"> C. Khá hữu ích, cập nhật một số thông tin chuyên môn mà tôi chưa biết</label>
-                <label><input type="checkbox" name="q4" value="D"> D. Rất hữu ích, mang lại góc nhìn mới mẻ và có tính ứng dụng cao cho việc tư vấn thực tế</label>
+                <label><input type="checkbox" name="q4" value="A"> A. Rất hạn chế</label>
+                <label><input type="checkbox" name="q4" value="B"> B. Hạn chế vừa phải</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Vừa phải</label>
+                <label><input type="checkbox" name="q4" value="D"> D. Tốt</label>
+                <label><input type="checkbox" name="q4" value="E"> E. Rất tốt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">5. Nội dung y khoa này có giúp anh/chị tự tin hơn khi tư vấn aluminum phosphate khi gặp bệnh nhân có các triệu chứng trào ngược dạ dày-thực quản như ợ hơi, ợ nóng, buồn nôn, đau thượng vị… không?</span>
+            <span class="question-text">5. Anh/chị đánh giá mức độ tự tin khi tư vấn aluminum phosphate khi gặp bệnh nhân có các triệu chứng trào ngược dạ dày-thực quản như ợ hơi, ợ nóng, buồn nôn, đau thượng vị như thế nào?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q5" value="A"> A. Vẫn chưa, tôi cần thêm thông tin</label>
-                <label><input type="checkbox" name="q5" value="B"> B. Tự tin một phần, tôi sẽ tư vấn khi khách hàng chủ động hỏi</label>
-                <label><input type="checkbox" name="q5" value="C"> C. Tự tin, tôi sẵn sàng chủ động tư vấn theo nhu cầu, tình trạng của khách</label>
-                <label><input type="checkbox" name="q5" value="D"> D. Rất tự tin, tôi có thể tư vấn sâu về hiệu quả, chất lượng để thuyết phục khách hàng</label>
+                <label><input type="checkbox" name="q5" value="A"> A. Tự tin thấp</label>
+                <label><input type="checkbox" name="q5" value="B"> B. Tự tin vừa</label>
+                <label><input type="checkbox" name="q5" value="C"> C. Tự tin</label>
+                <label><input type="checkbox" name="q5" value="D"> D. Khá tự tin</label>
+                <label><input type="checkbox" name="q5" value="E"> E. Rất tự tin</label>
             </div>
         </div>
 
+        <!-- Câu 6 giữ nguyên -->
         <div class="question-block">
             <span class="question-text">6. Trên thang điểm từ 1-5, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc giới thiệu về nội dung y khoa này cho đồng nghiệp</span>
             <div class="options-group">
@@ -144,10 +164,11 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
+        <span class="close-popup" id="closePopup">&times;</span>
         <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
         <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
-            TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" id="zaloLinkBtn">
+            TRUY CẬP ZALO OA NHẬN QUÀ
         </a>
     </div>
 </div>
@@ -157,12 +178,27 @@
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
     const overlay = document.getElementById('popup-overlay');
-    const container = document.getElementById('form-container');
+    const closePopup = document.getElementById('closePopup');
+    const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
+    // Lấy UTM parameters
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
     document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+
+    // Xử lý chuyển hướng Zalo (mở ở top window nếu nằm trong iframe)
+    zaloLinkBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.top.location.href = "https://zalo.me/s/2592899659654122271/";
+    });
+
+    // Đóng Popup
+    closePopup.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        btn.disabled = false;
+        btn.innerText = 'GỬI KẾT QUẢ';
+    });
 
     form.addEventListener('submit', e => {
         e.preventDefault();
@@ -187,12 +223,12 @@
 
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            container.style.display = 'none';
             overlay.style.display = 'flex';
+            btn.innerText = 'GỬI THÀNH CÔNG';
         })
         .catch(error => {
-            container.style.display = 'none';
-            overlay.style.display = 'flex';
+            overlay.style.display = 'flex'; // Vẫn hiện popup dù có lỗi mạng (để người dùng nhận quà)
+            btn.innerText = 'GỬI THÀNH CÔNG';
         });
     });
 </script>

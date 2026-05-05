@@ -24,7 +24,7 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* --- STYLE POP-UP CỐ ĐỊNH GIỮA MÀN HÌNH --- */
+        /* POP-UP OVERLAY */
         #popup-overlay {
             display: none;
             position: fixed;
@@ -33,53 +33,49 @@
             z-index: 99999;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
         }
 
         #msg-popup {
             background: white;
-            padding: 40px 25px 30px;
-            border-radius: 16px;
+            padding: 40px 25px 35px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
-            width: 100%;
+            max-width: 90%;
+            width: 380px;
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Nút X tắt popup */
         .close-popup {
             position: absolute;
-            top: 12px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #aaa;
-            cursor: pointer;
-            line-height: 1;
+            top: 12px; right: 18px;
+            font-size: 30px; font-weight: bold;
+            color: #ccc; cursor: pointer; line-height: 1;
+            transition: 0.2s;
         }
-        .close-popup:hover { color: #333; }
+        .close-popup:hover { color: #666; }
 
         @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.7) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .zalo-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 16px 28px;
-            background-color: #0068ff;
-            color: white !important;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+        .zalo-btn { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 16px 28px; 
+            background-color: #0068ff; 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: 15px;
+            box-shadow: 0 6px 20px rgba(0,104,255,0.4);
             text-transform: uppercase;
+            transition: transform 0.2s;
         }
+        .zalo-btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -90,27 +86,27 @@
     <form id="quiz-form">
         <input type="hidden" name="brand" value="Phosphalugel">
 
-        <!-- Câu 1 & 2 giữ nguyên -->
+        <!-- Câu 1 & 2 bạn có thể thay đổi nội dung tùy ý, dưới đây là ví dụ -->
         <div class="question-block">
-            <span class="question-text">1. Nhóm thuốc nào là lựa chọn phổ biến giúp làm dịu nhanh các triệu chứng đau rát, khó tiêu do dư thừa acid dịch vị?</span>
+            <span class="question-text">1. Aluminum phosphate gel có cơ chế tác động như thế nào trong điều trị dạ dày?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q1" value="A"> A. Kháng acid (Antacid)</label>
-                <label><input type="checkbox" name="q1" value="B"> B. Kháng histamin H2</label>
-                <label><input type="checkbox" name="q1" value="C"> C. Ức chế bơm proton (PPI)</label>
+                <label><input type="checkbox" name="q1" value="A"> A. Trung hòa acid dịch vị</label>
+                <label><input type="checkbox" name="q1" value="B"> B. Tạo lớp màng bảo vệ niêm mạc dạ dày</label>
+                <label><input type="checkbox" name="q1" value="C"> C. Giảm tiết acid kéo dài</label>
+                <label><input type="checkbox" name="q1" value="D"> D. Cả A và B đúng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">2. Hãy chọn tất cả các ý đúng khi nói về aluminum phosphate gel?</span>
+            <span class="question-text">2. Ưu điểm nổi bật của dạng gel so với dạng viên nén trong điều trị trào ngược là gì?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q2" value="A"> A. Aluminum phosphate gel trung hoà acid dịch vị nhanh chóng, giúp giảm triệu chứng ngay khi cần</label>
-                <label><input type="checkbox" name="q2" value="B"> B. Aluminum phosphate gel tạo lớp phủ bảo vệ niêm mạc dạ dày kéo dài tới 6 giờ</label>
-                <label><input type="checkbox" name="q2" value="C"> C. Phối hợp aluminum phosphate gel với PPI trong điều trị viêm loét dạ dày để kéo dài thời gian tác động của PPI</label>
-                <label><input type="checkbox" name="q2" value="D"> D. Phối hợp aluminum phosphate gel với PPI trong điều trị viêm loét dạ dày giúp cải thiện vết loét nhanh hơn</label>
+                <label><input type="checkbox" name="q2" value="A"> A. Tác dụng nhanh hơn</label>
+                <label><input type="checkbox" name="q2" value="B"> B. Khả năng bao phủ niêm mạc tốt hơn</label>
+                <label><input type="checkbox" name="q2" value="C"> C. Dễ uống hơn</label>
+                <label><input type="checkbox" name="q2" value="D"> D. Tất cả các ý trên</label>
             </div>
         </div>
 
-        <!-- Câu 3, 4, 5 điều chỉnh nội dung -->
         <div class="question-block">
             <span class="question-text">3. Mức độ sẵn sàng của anh/chị trong việc lựa chọn aluminum phosphate gel để kiểm soát trào ngược dạ dày-thực quản như thế nào?</span>
             <div class="options-group">
@@ -142,9 +138,8 @@
             </div>
         </div>
 
-        <!-- Câu 6 giữ nguyên -->
         <div class="question-block">
-            <span class="question-text">6. Trên thang điểm từ 1-5, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc giới thiệu về nội dung y khoa này cho đồng nghiệp</span>
+            <span class="question-text">6. Trên thang điểm từ 1-5, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc giới thiệu về nội dung y khoa này cho đồng nghiệp:</span>
             <div class="options-group">
                 <label><input type="checkbox" name="q6" value="1"> 1 (Rất không sẵn sàng)</label>
                 <label><input type="checkbox" name="q6" value="2"> 2 (Hơi không sẵn sàng)</label>
@@ -162,11 +157,12 @@
     </form>
 </div>
 
+<!-- POP-UP OVERLAY -->
 <div id="popup-overlay">
     <div id="msg-popup">
         <span class="close-popup" id="closePopup">&times;</span>
-        <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
-        <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
+        <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #444; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
         <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" id="zaloLinkBtn">
             TRUY CẬP ZALO OA NHẬN QUÀ
         </a>
@@ -174,36 +170,51 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwrPB2dzABmwe_vWRe-jWOk4n5r_LRf2WAEzL3I4sMSAmXNGa8-kj_pxP2bvt56O_laqg/exec';
+    // Nhớ thay thế URL script bên dưới bằng URL của file Google Sheets dành riêng cho Phosphalugel nếu cần
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxq9zRsIQ0n37urhnrWLPgLYntQaey0fWC_VoByEKwuf6RdYXCIg57LPGUof7_9TMwqrw/exec';
+    
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
     const overlay = document.getElementById('popup-overlay');
     const closePopup = document.getElementById('closePopup');
     const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
-    // Lấy UTM parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
-    document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
-    document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+    function getParam(name) {
+        let search = window.location.search;
+        try {
+            if (window.self !== window.top) search = window.top.location.search;
+        } catch (e) {}
+        return new URLSearchParams(search).get(name) || '';
+    }
 
-    // Xử lý chuyển hướng Zalo (mở ở top window nếu nằm trong iframe)
+    document.getElementById('utm_source').value = getParam('utm_source');
+    document.getElementById('utm_medium').value = getParam('utm_medium');
+    document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+    // Chuyển hướng ZOA chuẩn Telfast (giúp thoát khỏi iframe)
     zaloLinkBtn.addEventListener('click', function(e) {
         e.preventDefault();
         window.top.location.href = "https://zalo.me/s/2592899659654122271/";
     });
 
-    // Đóng Popup
     closePopup.addEventListener('click', () => {
         overlay.style.display = 'none';
         btn.disabled = false;
         btn.innerText = 'GỬI KẾT QUẢ';
     });
 
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = 'GỬI KẾT QUẢ';
+        }
+    });
+
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true;
-        btn.innerText = 'Đang xử lý...';
+        btn.innerText = 'Đang gửi dữ liệu...';
 
         const formData = new FormData(form);
         const finalData = new URLSearchParams();
@@ -227,8 +238,9 @@
             btn.innerText = 'GỬI THÀNH CÔNG';
         })
         .catch(error => {
-            overlay.style.display = 'flex'; // Vẫn hiện popup dù có lỗi mạng (để người dùng nhận quà)
-            btn.innerText = 'GỬI THÀNH CÔNG';
+            btn.disabled = false;
+            btn.innerText = 'THỬ LẠI';
+            alert('Có lỗi xảy ra, vui lòng thử lại.');
         });
     });
 </script>

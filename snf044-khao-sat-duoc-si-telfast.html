@@ -24,7 +24,7 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* CSS CHO POP-UP (MODAL) */
+        /* CSS CHO POP-UP */
         #popup-overlay {
             display: none;
             position: fixed;
@@ -34,18 +34,31 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            box-sizing: border-box;
         }
 
         #msg-popup {
             background: white;
-            padding: 30px 20px;
+            padding: 40px 20px 30px;
             border-radius: 15px;
             text-align: center;
             max-width: 400px;
             width: 100%;
+            position: relative;
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        /* Nút X tắt popup */
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-popup:hover { color: #333; }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.8); }
@@ -61,8 +74,9 @@
             text-decoration: none; 
             border-radius: 50px; 
             font-weight: bold; 
-            font-size: 15px;
+            font-size: 14px;
             box-shadow: 0 4px 15px rgba(0,104,255,0.3);
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -95,7 +109,7 @@
         </div>
 
         <div class="question-block">
-            <span class="question-text">3. Sau khi tiếp cận nội dung y khoa này, mức độ sẵn sàng của anh/chị trong việc lựa chọn fexofenadine để kiểm soát viêm mũi dị ứng và mày đay mạn tính như thế nào?</span>
+            <span class="question-text">3. Mức độ sẵn sàng của anh/chị trong việc lựa chọn fexofenadine để kiểm soát viêm mũi dị ứng và mày đay mạn tính như thế nào?</span>
             <div class="options-group">
                 <label><input type="checkbox" name="q3" value="A"> A. Rất sẵn sàng lựa chọn</label>
                 <label><input type="checkbox" name="q3" value="B"> B. Có thể sẽ lựa chọn</label>
@@ -104,22 +118,24 @@
         </div>
 
         <div class="question-block">
-            <span class="question-text">4. Anh/chị đánh giá thế nào về mức độ cung cấp kiến thức về lựa chọn điều trị viêm mũi dị ứng và mày đay mạn tính của nội dung y khoa này so với những gì anh/chị đã biết trước đây?</span>
+            <span class="question-text">4. Anh/chị đánh giá kiến thức của mình về lựa chọn điều trị viêm mũi dị ứng và mày đay mạn tính với fexofenadine như thế nào?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q4" value="A"> A. Không mang lại kiến thức mới</label>
-                <label><input type="checkbox" name="q4" value="B"> B. Mang tính ôn tập, đa phần là các kiến thức tôi đã biết</label>
-                <label><input type="checkbox" name="q4" value="C"> C. Khá hữu ích, cập nhật một số thông tin chuyên môn mà tôi chưa biết</label>
-                <label><input type="checkbox" name="q4" value="D"> D. Rất hữu ích, mang lại góc nhìn mới mẻ và có tính ứng dụng cao cho việc tư vấn thực tế</label>
+                <label><input type="checkbox" name="q4" value="A"> A. Rất hạn chế</label>
+                <label><input type="checkbox" name="q4" value="B"> B. Hạn chế vừa phải</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Vừa phải</label>
+                <label><input type="checkbox" name="q4" value="D"> D. Tốt</label>
+                <label><input type="checkbox" name="q4" value="E"> E. Rất tốt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">5. Nội dung y khoa này có giúp anh/chị tự tin hơn khi tư vấn fexofenadine để kiểm soát triệu chứng viêm mũi dị ứng hay mày đay mạn tính cho bệnh nhân không?</span>
+            <span class="question-text">5. Anh/chị đánh giá mức độ tự tin khi tư vấn fexofenadine để kiểm soát triệu chứng viêm mũi dị ứng hay mày đay mạn tính cho bệnh nhân như thế nào?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q5" value="A"> A. Vẫn chưa, tôi cần thêm thông tin</label>
-                <label><input type="checkbox" name="q5" value="B"> B. Tự tin một phần, tôi sẽ tư vấn khi khách hàng chủ động hỏi</label>
-                <label><input type="checkbox" name="q5" value="C"> C. Tự tin, tôi sẵn sàng chủ động tư vấn theo nhu cầu, tình trạng của khách</label>
-                <label><input type="checkbox" name="q5" value="D"> D. Rất tự tin, tôi có thể tư vấn sâu về hiệu quả, chất lượng để thuyết phục khách hàng</label>
+                <label><input type="checkbox" name="q5" value="A"> A. Tự tin thấp</label>
+                <label><input type="checkbox" name="q5" value="B"> B. Tự tin vừa</label>
+                <label><input type="checkbox" name="q5" value="C"> C. Tự tin</label>
+                <label><input type="checkbox" name="q5" value="D"> D. Khá tự tin</label>
+                <label><input type="checkbox" name="q5" value="E"> E. Rất tự tin</label>
             </div>
         </div>
 
@@ -144,10 +160,11 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
+        <span class="close-popup" id="closePopup">&times;</span>
         <h2 style="color: #28a745; margin-top: 0;">Cảm ơn bạn!</h2>
         <p style="font-size: 16px; line-height: 1.5; color: #333;">Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
-            TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" id="zaloLinkBtn">
+            TRUY CẬP ZALO OA NHẬN QUÀ
         </a>
     </div>
 </div>
@@ -157,11 +174,34 @@
     const form = document.getElementById('quiz-form');
     const btn = document.getElementById('submitBtn');
     const overlay = document.getElementById('popup-overlay');
+    const closePopup = document.getElementById('closePopup');
+    const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
-    document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
-    document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+    // Lấy UTM parameters hỗ trợ cả iFrame
+    function getParam(name) {
+        let search = window.location.search;
+        try {
+            if (window.self !== window.top) search = window.top.location.search;
+        } catch (e) {}
+        return new URLSearchParams(search).get(name) || '';
+    }
+
+    document.getElementById('utm_source').value = getParam('utm_source');
+    document.getElementById('utm_medium').value = getParam('utm_medium');
+    document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+    // Điều hướng Zalo ở cửa sổ cao nhất
+    zaloLinkBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.top.location.href = "https://zalo.me/s/2592899659654122271/";
+    });
+
+    // Đóng Popup
+    closePopup.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        btn.disabled = false;
+        btn.innerText = 'GỬI KẾT QUẢ';
+    });
 
     form.addEventListener('submit', e => {
         e.preventDefault();
@@ -186,10 +226,8 @@
 
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            // HIỆN POP-UP NGAY LẬP TỨC
             overlay.style.display = 'flex';
-            
-            // Reset nút bấm
+            window.scrollTo(0, 0);
             btn.innerText = 'GỬI THÀNH CÔNG';
         })
         .catch(error => {

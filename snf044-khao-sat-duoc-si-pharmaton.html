@@ -24,11 +24,11 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* --- STYLE POP-UP CANH GIỮA MÀN HÌNH --- */
+        /* --- STYLE POP-UP CỐ ĐỊNH GIỮA MÀN HÌNH --- */
         #popup-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.75);
             z-index: 99999;
             justify-content: center;
@@ -39,14 +39,28 @@
 
         #msg-popup {
             background: white;
-            padding: 35px 25px;
+            padding: 40px 25px 30px;
             border-radius: 16px;
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            position: relative; /* Để đặt nút X */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        /* Nút đóng Pop-up */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .close-btn:hover { color: #333; }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.8); }
@@ -55,7 +69,7 @@
 
         .zalo-btn {
             display: inline-block;
-            margin-top: 25px;
+            margin-top: 10px;
             padding: 16px 28px;
             background-color: #0068ff;
             color: white !important;
@@ -98,31 +112,33 @@
         </div>
 
         <div class="question-block">
-            <span class="question-text">3. Sau khi tiếp cận nội dung y khoa này, xin hãy đánh giá mức độ sẵn sàng của anh/chị trong việc tư vấn sản phẩm bổ sung năng lượng và hỗ trợ sức đề kháng chứa công thức nhân sâm G115 kết hợp vitamin và khoáng chất:</span>
+            <span class="question-text">3. Mức độ sẵn sàng của anh/chị trong việc lựa chọn sản phẩm bổ sung năng lượng và hỗ trợ sức đề kháng với công thức nhân sâm G115 kết hợp vitamin và khoáng chất:</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q3" value="A"> A. Rất sẵn sàng, tôi sẽ chủ động tư vấn sản phẩm chứa công thức trên cho người tiêu dùng</label>
-                <label><input type="checkbox" name="q3" value="B"> B. Khá sẵn sàng, tôi sẽ cân nhắc tư vấn sản phẩm chứa công thức trên cho người tiêu dùng</label>
-                <label><input type="checkbox" name="q3" value="C"> C. Không sẵn sàng, tôi chưa thấy được tầm quan trọng của việc tư vấn chủ động</label>
+                <label><input type="checkbox" name="q3" value="A"> A. Rất sẵn sàng lựa chọn</label>
+                <label><input type="checkbox" name="q3" value="B"> B. Có thể sẽ lựa chọn</label>
+                <label><input type="checkbox" name="q3" value="C"> C. Không có ý định lựa chọn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">4. Anh/chị đánh giá thế nào về mức độ cung cấp kiến thức mới về lựa chọn sản phẩm bổ sung năng lượng tối ưu so với những gì anh/chị đã biết trước đây?</span>
+            <span class="question-text">4. Anh/chị đánh giá kiến thức của mình về tư vấn sản phẩm bổ sung năng lượng nhân sâm G115 kết hợp vitamin & khoáng chất như thế nào?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q4" value="A"> A. Không mang lại kiến thức mới</label>
-                <label><input type="checkbox" name="q4" value="B"> B. Mang tính ôn tập, đa phần là các kiến thức tôi đã biết</label>
-                <label><input type="checkbox" name="q4" value="C"> C. Khá hữu ích, cập nhật một số thông tin chuyên môn mà tôi chưa biết</label>
-                <label><input type="checkbox" name="q4" value="D"> D. Rất hữu ích, mang lại góc nhìn mới mẻ và có tính ứng dụng cao cho việc tư vấn thực tế</label>
+                <label><input type="checkbox" name="q4" value="A"> A. Rất hạn chế</label>
+                <label><input type="checkbox" name="q4" value="B"> B. Hạn chế vừa phải</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Vừa phải</label>
+                <label><input type="checkbox" name="q4" value="D"> D. Tốt</label>
+                <label><input type="checkbox" name="q4" value="E"> E. Rất tốt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <span class="question-text">5. Nội dung y khoa này có giúp anh/chị tự tin hơn khi tư vấn lựa chọn sản phẩm bổ sung năng lượng tối ưu tại nhà thuốc không?</span>
+            <span class="question-text">5. Anh/chị đánh giá mức độ tự tin khi tư vấn sản phẩm bổ sung năng lượng chứa nhân sâm G115 kết hợp vitamin & khoáng chất như thế nào?</span>
             <div class="options-group">
-                <label><input type="checkbox" name="q5" value="A"> A. Vẫn chưa, tôi cần thêm thông tin</label>
-                <label><input type="checkbox" name="q5" value="B"> B. Tự tin một phần, tôi sẽ tư vấn khi khách hàng chủ động hỏi</label>
-                <label><input type="checkbox" name="q5" value="C"> C. Tự tin, tôi sẵn sàng chủ động tư vấn theo nhu cầu, tình trạng của khách</label>
-                <label><input type="checkbox" name="q5" value="D"> D. Rất tự tin, tôi có thể tư vấn sâu về hiệu quả, chất lượng để thuyết phục khách hàng</label>
+                <label><input type="checkbox" name="q5" value="A"> A. Tự tin thấp</label>
+                <label><input type="checkbox" name="q5" value="B"> B. Tự tin vừa</label>
+                <label><input type="checkbox" name="q5" value="C"> C. Tự tin</label>
+                <label><input type="checkbox" name="q5" value="D"> D. Khá tự tin</label>
+                <label><input type="checkbox" name="q5" value="E"> E. Rất tự tin</label>
             </div>
         </div>
 
@@ -147,9 +163,10 @@
 
 <div id="popup-overlay">
     <div id="msg-popup">
+        <span class="close-btn" id="close-popup">&times;</span>
         <h2 style="color: #28a745; margin-top: 0; text-transform: none;">Cảm ơn bạn!</h2>
         <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 15px 0;">Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" target="_blank">
+        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn" id="zalo-link">
             TRUY CẬP ZALO OA ĐỂ NHẬN NGAY QUÀ TẶNG
         </a>
     </div>
@@ -161,11 +178,28 @@
     const btn = document.getElementById('submitBtn');
     const overlay = document.getElementById('popup-overlay');
     const container = document.getElementById('form-container');
+    const closePopup = document.getElementById('close-popup');
+    const zaloLink = document.getElementById('zalo-link');
 
+    // Lấy UTM parameters
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
     document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+
+    // Nút đóng pop-up
+    closePopup.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        container.style.display = 'block'; // Hiện lại form nếu cần
+        btn.disabled = false;
+        btn.innerText = 'GỬI KẾT QUẢ';
+    });
+
+    // Chuyển qua Zalo OA
+    zaloLink.addEventListener('click', (e) => {
+        // Đảm bảo link mở đúng cách trên mobile
+        window.location.href = "https://zalo.me/s/2592899659654122271/";
+    });
 
     form.addEventListener('submit', e => {
         e.preventDefault();
@@ -194,7 +228,6 @@
             overlay.style.display = 'flex';
         })
         .catch(error => {
-            // Đảm bảo luôn hiện popup kể cả khi gặp lỗi mạng phản hồi
             container.style.display = 'none';
             overlay.style.display = 'flex';
         });

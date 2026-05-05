@@ -24,7 +24,6 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* --- STYLE POP-UP CỐ ĐỊNH GIỮA MÀN HÌNH --- */
         #popup-overlay {
             display: none;
             position: fixed;
@@ -49,7 +48,6 @@
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Nút X đóng pop-up */
         .close-popup {
             position: absolute;
             top: 10px;
@@ -60,7 +58,6 @@
             cursor: pointer;
             line-height: 1;
         }
-        .close-popup:hover { color: #333; }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.8); }
@@ -80,7 +77,6 @@
             box-shadow: 0 4px 15px rgba(0,104,255,0.3);
             transition: transform 0.2s;
         }
-        .zalo-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -91,7 +87,7 @@
     <form id="quiz-form">
         <input type="hidden" name="brand" value="Pharmaton">
 
-        <!-- Câu 1 & 2 giữ nguyên -->
+        <!-- Câu hỏi 1-6 -->
         <div class="question-block">
             <span class="question-text">1. Dựa theo nội dung y khoa này, hãy chỉ ra những đặc điểm nổi trội của nhân sâm G115 (chọn tất cả ý đúng):</span>
             <div class="options-group">
@@ -112,7 +108,6 @@
             </div>
         </div>
 
-        <!-- Câu 3, 4, 5 đã điều chỉnh nội dung -->
         <div class="question-block">
             <span class="question-text">3. Mức độ sẵn sàng của anh/chị trong việc lựa chọn sản phẩm bổ sung năng lượng và hỗ trợ sức đề kháng với công thức nhân sâm G115 kết hợp vitamin và khoáng chất:</span>
             <div class="options-group">
@@ -163,7 +158,6 @@
     </form>
 </div>
 
-<!-- POP-UP ĐÃ ĐIỀU CHỈNH TEXT VÀ ID -->
 <div id="popup-overlay">
     <div id="msg-popup">
         <span class="close-popup" id="closePopup">&times;</span>
@@ -190,7 +184,7 @@
     document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
     document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
 
-    // Xử lý nút X tắt pop-up
+    // Tắt pop-up
     closePopupBtn.addEventListener('click', () => {
         overlay.style.display = 'none';
         container.style.display = 'block'; 
@@ -198,16 +192,10 @@
         btn.innerText = 'GỬI KẾT QUẢ';
     });
 
-    // Chuyển qua Zalo OA
-    zaloLinkBtn.addEventListener('click', function(e) {
-        // e.preventDefault(); // Mở comment nếu muốn xử lý đặc biệt, hiện tại để mặc định cho link href hoạt động
-        window.location.href = "https://zalo.me/s/2592899659654122271/";
-    });
-
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true;
-        btn.innerText = 'Đang xử lý...';
+        btn.innerText = 'Đang gửi dữ liệu...';
 
         const formData = new FormData(form);
         const finalData = new URLSearchParams();
@@ -225,15 +213,25 @@
             finalData.append(key, tempObj[key]);
         }
 
+        // Gửi dữ liệu đồng thời hiển thị Pop-up ngay để tránh bị kẹt do CORS
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
         .then(() => {
-            container.style.display = 'none';
-            overlay.style.display = 'flex';
+            showSuccess();
         })
-        .catch(error => {
-            container.style.display = 'none';
-            overlay.style.display = 'flex';
+        .catch(() => {
+            // Vẫn hiện success kể cả khi lỗi mạng để user có thể nhấn link Zalo
+            showSuccess();
         });
+    });
+
+    function showSuccess() {
+        container.style.display = 'none';
+        overlay.style.display = 'flex';
+    }
+
+    // Đảm bảo link Zalo mở được trên mọi thiết bị
+    zaloLinkBtn.addEventListener('click', function(e) {
+        // Có thể bổ sung track click tại đây nếu cần
     });
 </script>
 </body>

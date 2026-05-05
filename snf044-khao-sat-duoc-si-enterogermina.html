@@ -24,9 +24,8 @@
         button:hover { background: #0056b3; }
         button:disabled { background: #cbd5e0; }
 
-        /* --- CSS POP-UP GIỐNG CÁC BẢN TRƯỚC --- */
         #popup-overlay {
-            display: none; /* Mặc định ẩn */
+            display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8);
@@ -75,8 +74,7 @@
         </div>
 
         <div class="question-block">
-            <span class="question-text">2. Trong các chủng men vi sinh sau đây, bạn sẽ ưu tiên lựa chọn chủng nào để tư vấn điều trị khóc dạ đề ở trẻ nhũ nhi với các bằng chứng lâm sàng về hiệu quả giảm thời gian quấy khóc và tính an toàn?
-?</span>
+            <span class="question-text">2. Trong các chủng men vi sinh sau đây, bạn sẽ ưu tiên lựa chọn chủng nào để tư vấn điều trị khóc dạ đề ở trẻ nhũ nhi với các bằng chứng lâm sàng về hiệu quả giảm thời gian quấy khóc và tính an toàn?</span>
             <div class="options-group">
                 <label><input type="checkbox" name="q2" value="A"> A. Lactobacillus acidophilus (La-5)</label>
                 <label><input type="checkbox" name="q2" value="B"> B. Bifidobacterium animalis subsp. lactis (BB-12)</label>
@@ -114,7 +112,7 @@
                 <label><input type="checkbox" name="q5" value="B"> B. Hạn chế vừa phải</label>
                 <label><input type="checkbox" name="q5" value="C"> C. Vừa phải</label>
                 <label><input type="checkbox" name="q5" value="D"> D. Tốt</label>
-                <label><input type="checkbox" name="q5" value="D"> E. Rất tốt</label>
+                <label><input type="checkbox" name="q5" value="E"> E. Rất tốt</label>
             </div>
         </div>
 
@@ -125,7 +123,7 @@
                 <label><input type="checkbox" name="q6" value="B"> B. Tự tin vừa</label>
                 <label><input type="checkbox" name="q6" value="C"> C. Tự tin</label>
                 <label><input type="checkbox" name="q6" value="D"> D. Khá tự tin</label>
-                <label><input type="checkbox" name="q6" value="D"> E. Rất tự tin</label>
+                <label><input type="checkbox" name="q6" value="E"> E. Rất tự tin</label>
             </div>
         </div>
 
@@ -152,7 +150,8 @@
     <div id="msg-popup">
         <h2 style="color: #28a745; margin-bottom: 10px;">Cảm ơn bạn!</h2>
         <p>Kết quả khảo sát đã được ghi nhận thành công.</p>
-        <a href="https://zalo.me/s/2592899659654122271/" class="zalo-btn">TRUY CẬP ZALO OA NHẬN QUÀ</a>
+        <!-- Nút Zalo với cơ chế mở Top Window -->
+        <a href="https://zalo.me/s/2592899659654122271/" id="zaloLinkBtn" class="zalo-btn">TRUY CẬP ZALO OA NHẬN QUÀ</a>
     </div>
 </div>
 
@@ -162,11 +161,26 @@
     const btn = document.getElementById('submitBtn');
     const overlay = document.getElementById('popup-overlay');
     const container = document.getElementById('form-container');
+    const zaloLinkBtn = document.getElementById('zaloLinkBtn');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
-    document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
-    document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+    // Hàm lấy UTM parameters hỗ trợ iFrame
+    function getParam(name) {
+        let search = window.location.search;
+        try {
+            if (window.self !== window.top) search = window.top.location.search;
+        } catch (e) {}
+        return new URLSearchParams(search).get(name) || '';
+    }
+
+    document.getElementById('utm_source').value = getParam('utm_source');
+    document.getElementById('utm_medium').value = getParam('utm_medium');
+    document.getElementById('utm_campaign').value = getParam('utm_campaign');
+
+    // Cơ chế ép mở Zalo ở cửa sổ cao nhất để không bị chặn
+    zaloLinkBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.top.location.href = "https://zalo.me/s/2592899659654122271/";
+    });
 
     form.addEventListener('submit', e => {
         e.preventDefault();
@@ -189,16 +203,20 @@
             finalData.append(key, tempObj[key]);
         }
 
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: finalData })
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            body: finalData 
+        })
         .then(() => {
-            // Khi thành công: Ẩn form và Hiện popup
             container.style.display = 'none';
             overlay.style.display = 'flex';
+            window.scrollTo(0, 0);
         })
         .catch(error => {
-            // Trường hợp có lỗi mạng vẫn cho hiện popup để khách không bấm lại
             container.style.display = 'none';
             overlay.style.display = 'flex';
+            window.scrollTo(0, 0);
         });
     });
 </script>
